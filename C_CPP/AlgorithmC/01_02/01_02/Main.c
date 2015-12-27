@@ -1,6 +1,7 @@
 /*************************************************************/
 /* 该程序判断输入两点是否联通
 /* 如果未联通则联通之，已经连通则提示所有与之联通的点
+/* 数组内容为该节点所对应父节点
 /*************************************************************/
 
 #include <stdio.h>
@@ -11,7 +12,7 @@
 int main(void)
 {
 	int array[MAX_SIZE];
-	int useSize, num1, num2, temp, i;
+	int useSize, num1, num2, i, j;
 
 	for (i = 0; i < MAX_SIZE; i++)
 	{
@@ -28,29 +29,17 @@ int main(void)
 			break;
 		}
 
-		if (array[num1] == array[num2])
+		for (i = num1; i != array[i]; i = array[i]);
+		for (j = num2; j != array[j]; j = array[j]);
+
+		if (i == j)
 		{
-			printf("已经联接");
-			for (i = 0; i < useSize; i++)
-			{
-				if (array[i] == array[num1])
-				{
-					printf(" %d", i);
-				}
-			}
-			printf("\n");
+			printf("已经连接\n");
 		}
 		else
 		{
-			temp = array[num1];
-			for (i = 0; i < useSize; i++)
-			{
-				if (array[i] == temp)
-				{
-					array[i] = array[num2];
-				}
-			}
-			printf("联接 %d %d\n", num1, num2);
+			array[i] = j;
+			printf("连接： %d %d\n", num1, num2);
 		}
 
 		printf("------数组内容:(");
