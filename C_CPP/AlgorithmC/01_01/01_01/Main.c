@@ -1,40 +1,45 @@
 /*************************************************************/
 /* 该程序判断输入两点是否联通
 /* 如果未联通则联通之，已经连通则提示所有与之联通的点
-/* 数组内容相同的节点表示连通
+/* states数组中内容相同的节点之间表示连通
 /*************************************************************/
 
 #include <stdio.h>
+#include <stdlib.h>
 
 #define MAX_SIZE 1000
 
 
 int main(void)
 {
-	int array[MAX_SIZE];
-	int useSize, num1, num2, temp, i;
+	int states[MAX_SIZE];
+	int usingSize, id1, id2, temp, i;
 
 	for (i = 0; i < MAX_SIZE; i++)
 	{
-		array[i] = i;
+		states[i] = i;
 	}
 
 	printf("请输入连接点范围：");
-	scanf("%d", &useSize);
-
-	while (2 == scanf("%d %d", &num1, &num2))
+	scanf("%d", &usingSize);
+	if (usingSize <= 0 || usingSize >= MAX_SIZE)
 	{
-		if (num1 < 0 || num1 > useSize || num2 < 0 || num2 > useSize)
+		exit(0);
+	}
+
+	while (2 == scanf("%d %d", &id1, &id2))
+	{
+		if (id1 < 0 || id1 >= usingSize || id2 < 0 || id2 >= usingSize)
 		{
-			break;
+			exit(0);
 		}
 
-		if (array[num1] == array[num2])
+		if (states[id1] == states[id2])
 		{
 			printf("已经连接");
-			for (i = 0; i < useSize; i++)
+			for (i = 0; i < usingSize; i++)
 			{
-				if (array[i] == array[num1])
+				if (states[i] == states[id1])
 				{
 					printf(" %d", i);
 				}
@@ -43,21 +48,21 @@ int main(void)
 		}
 		else
 		{
-			temp = array[num1];
-			for (i = 0; i < useSize; i++)
+			temp = states[id1];
+			for (i = 0; i < usingSize; i++)
 			{
-				if (array[i] == temp)
+				if (states[i] == temp)
 				{
-					array[i] = array[num2];
+					states[i] = states[id2];
 				}
 			}
-			printf("连接 %d %d\n", num1, num2);
+			printf("连接 %d %d\n", id1, id2);
 		}
 
-		printf("------数组内容:(");
-		for (i = 0; i < useSize; i++)
+		printf("------states: (");
+		for (i = 0; i < usingSize; i++)
 		{
-			printf(" %d", array[i]);
+			printf(" %d", states[i]);
 		}
 		printf(" )\n\n");
 	}
