@@ -35,8 +35,23 @@ int main(void)
 			exit(0);
 		}
 
-		for (i = id1; i != parents[i]; i = parents[i]);
-		for (j = id2; j != parents[j]; j = parents[j]);
+		for (i = id1; i != parents[i]; i = parents[i])
+		{
+			if (parents[i] != parents[parents[i]])
+			{
+				childrenCount[parents[i]] -= childrenCount[i];
+			}
+			parents[i] = parents[parents[i]];
+		}
+
+		for (j = id2; j != parents[j]; j = parents[j])
+		{
+			if (parents[j] != parents[parents[j]])
+			{
+				childrenCount[parents[j]] -= childrenCount[j];
+			}
+			parents[j] = parents[parents[j]];
+		}
 
 		if (i == j)
 		{
