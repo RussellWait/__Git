@@ -22,44 +22,44 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
                      _In_ LPTSTR    lpCmdLine,
                      _In_ int       nCmdShow)
 {
-//	UNREFERENCED_PARAMETER(hPrevInstance);
-//	UNREFERENCED_PARAMETER(lpCmdLine);
-//
-// 	// TODO: 在此放置代码。
-//	MSG msg;
-//	HACCEL hAccelTable;
-//
-//	// 初始化全局字符串
-//	LoadString(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
-//	LoadString(hInstance, IDC_DEMO_02_02, szWindowClass, MAX_LOADSTRING);
-//	MyRegisterClass(hInstance);
-//
-//	// 执行应用程序初始化:
-//	if (!InitInstance (hInstance, nCmdShow))
-//	{
-//		return FALSE;
-//	}
-//
-//	hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_DEMO_02_02));
-//
-//	// 主消息循环:
-//	while (GetMessage(&msg, NULL, 0, 0))
-//	{
-//		if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
-//		{
-//			TranslateMessage(&msg);
-//			DispatchMessage(&msg);
-//		}
-//	}
-//
-//	return (int) msg.wParam;
+	UNREFERENCED_PARAMETER(hPrevInstance);
+	UNREFERENCED_PARAMETER(lpCmdLine);
 
-	MessageBox(	NULL, 
-				"THERE CAN BE ONLY ONE!!!", 
-				"MY FIRST WINDOWS PROGRAM",
-				MB_OK | MB_ICONEXCLAMATION);
+ 	// TODO: 在此放置代码。
+	MSG msg;
+	HACCEL hAccelTable;
 
-	return 0;
+	// 初始化全局字符串
+	LoadString(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
+	LoadString(hInstance, IDC_DEMO_02_02, szWindowClass, MAX_LOADSTRING);
+	MyRegisterClass(hInstance);
+
+	// 执行应用程序初始化:
+	if (!InitInstance (hInstance, nCmdShow))
+	{
+		return FALSE;
+	}
+
+	hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_DEMO_02_02));
+
+	// 主消息循环:
+	while (GetMessage(&msg, NULL, 0, 0))
+	{
+		if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
+		{
+			TranslateMessage(&msg);
+			DispatchMessage(&msg);
+		}
+	}
+
+	return (int) msg.wParam;
+
+	//MessageBox(	NULL, 
+	//			"THERE CAN BE ONLY ONE!!!", 
+	//			"MY FIRST WINDOWS PROGRAM",
+	//			MB_OK | MB_ICONEXCLAMATION);
+
+	//return 0;
 }
 
 
@@ -107,7 +107,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    hInst = hInstance; // 将实例句柄存储在全局变量中
 
    hWnd = CreateWindow(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
-      CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, NULL, NULL, hInstance, NULL);
+	   CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, NULL, NULL, hInstance, NULL);
 
    if (!hWnd)
    {
