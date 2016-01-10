@@ -9,6 +9,7 @@ HDC hdc;
 
 // 存放渲染环境的句柄
 HGLRC hrc;
+
 void setupPixelFormat(HDC hdc)
 {
 	// 用来存放像素格式的索引数值
@@ -22,27 +23,29 @@ void setupPixelFormat(HDC hdc)
 		sizeof(PIXELFORMATDESCRIPTOR),		// 描述结构的大小
 		1,									// 版本号
 
-											// 描述像素缓冲区属性标志：
-		PFD_DRAW_TO_WINDOW	|				//		PFD_DRAW_TO_WINDOW			缓冲区可以绘制到一个窗口或者设备表面
-		PFD_SUPPORT_OPENGL	|				//		PFD_SUPPORT_OPENGL			缓冲区支持OpenGL绘制
-		PFD_DOUBLEBUFFER,					//		PFD_DOUBLEBUFFER			支持双缓冲，与PFD_SUPPORT_GDI互斥
+		PFD_DRAW_TO_WINDOW	|
+		PFD_SUPPORT_OPENGL	|
+		PFD_DOUBLEBUFFER,					// 描述像素缓冲区属性标志：
+											//		PFD_DRAW_TO_WINDOW			缓冲区可以绘制到一个窗口或者设备表面
+											//		PFD_SUPPORT_OPENGL			缓冲区支持OpenGL绘制
+											//		PFD_DOUBLEBUFFER			支持双缓冲，与PFD_SUPPORT_GDI互斥
 											//		PFD_DEPTH_DONTCARE			被请求的像素格式，可以带也可以不带深度缓冲区，不指定的话仅带深度缓冲区的像素格式被考虑
 											//		PFD_DOUBLEBUFFER_DONTCARE	像素格式可以是单一的也可以是双缓冲区的
-											//		PFD_GENERIC_ACCELERATED		像素格式呗设备驱动器所加速
+											//		PFD_GENERIC_ACCELERATED		像素格式被设备驱动器所加速
 											//		PFD_GENERIC_FORMAT			像素格式仅在软件中被支持
 
-											// 描述像素数据类型：
-		PFD_TYPE_RGBA,						//		PFD_TYPE_RGBA				红、绿、蓝、透明
+		PFD_TYPE_RGBA,						// 描述像素数据类型：
+											//		PFD_TYPE_RGBA				红、绿、蓝、透明
 											//		PFD_TYPE_COLORINDEX			调色板模式
 
-		32,									// 每个像素的字节位数，就是我们看到图片颜色的位数
-		0, 0, 0, 0, 0, 0, 0, 0,				// 红色字节位数、以为计数，绿色...，蓝色...，alpha通道...
+		32,									// 每个像素的字节位数，就是我们看到图片颜色的位
+		0, 0, 0, 0, 0, 0, 0, 0,				// 红色字节位数、移位计数，绿色...，蓝色...，alpha通道...
 		0,									// 累加缓冲区字节位数
 		0, 0, 0, 0,							// 红、绿、蓝、alpha累加字节位数
 		32, 0, 0,							// 深度、特征、辅助缓冲区字节位数
 
-											// 绘图图层类型：
-		PFD_MAIN_PLANE,						//		PFD_MAIN_PLANE				设为主图层
+		PFD_MAIN_PLANE,						// 绘图图层类型：
+											//		PFD_MAIN_PLANE				设为主图层
 											//		PFD_OVERLAY_PLANE			设为上层
 											//		PFD_UNDERLAY_PLANE			设为底层
 
