@@ -7,6 +7,6 @@ IDC_CURSOR_GREEN		CURSOR		resource\greenarrow.cur
 
 STRINGTABLE
 {
-	IDS_STRING_LOAD,				"string of load"
+	IDS_STRING_LOAD					"string of load"
 	IDS_STRING_SAVE					"string of save"
 }
