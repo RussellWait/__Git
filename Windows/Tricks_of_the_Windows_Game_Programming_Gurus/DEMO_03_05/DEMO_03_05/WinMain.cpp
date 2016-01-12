@@ -74,12 +74,12 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 	wndClass.cbClsExtra		= 0;
 	wndClass.cbWndExtra		= 0;
 	wndClass.hInstance		= hInstance;
-	wndClass.hIcon			= LoadIcon(NULL, MAKEINTRESOURCE(IDI_APPLICATION));
-	wndClass.hCursor		= LoadCursor(NULL, MAKEINTRESOURCE(IDC_CROSS));
+	wndClass.hIcon			= LoadIcon(NULL, IDI_APPLICATION);
+	wndClass.hCursor		= LoadCursor(NULL, IDC_CROSS);
 	wndClass.hbrBackground	= (HBRUSH)GetStockObject(WHITE_BRUSH);
 	wndClass.lpszMenuName	= NULL;
 	wndClass.lpszClassName	= WND_CLASS_NAME;
-	wndClass.hIconSm		= LoadIcon(NULL, MAKEINTRESOURCE(IDI_HAND));
+	wndClass.hIconSm		= LoadIcon(NULL, IDI_APPLICATION);
 
 	return RegisterClassEx(&wndClass);
 }
@@ -138,5 +138,5 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		break;
 	}
 
-	DefWindowProc(hWnd, msg, wParam, lParam);
+	return DefWindowProc(hWnd, msg, wParam, lParam);
 }
