@@ -4,6 +4,10 @@
 #include <gl/GLU.h>
 #include <gl/GLAUX.H>
 
+
+#define WND_CLASS_NAME		"Test"
+
+
 // 事件句柄回调函数
 HDC hdc;
 
@@ -83,7 +87,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 			// 以后这个线程所有的OpenGL调用都是在这个hdc标识的设备上绘制
 			// 你也可以使用 wglMakeCurrent 来改变调用线程的当前渲染环境，使之不再是当前的渲染环境
 			
-			// hdc：设备环境的句柄，调用这个函数的线程接下来的所有OpenGL调用倒在这个hdc所标识的设备上绘制
+			// hdc：设备环境的句柄，调用这个函数的线程接下来的所有OpenGL调用都在这个hdc所标识的设备上绘制
 			// hrc：函数设定的OpenGL渲染环境的句柄，作为当前线程的渲染环境
 			//		如果hrc为NULL，函数将使调用线程的当前渲染环境不再作为当前的渲染环境，并释放这个渲染环境所使用的设备环境。此时hdc参数将被忽略
 			wglMakeCurrent(hdc, hrc);
@@ -118,8 +122,8 @@ int WINAPI WinMain(HINSTANCE hinstance, HINSTANCE hPrevinstance, LPSTR lpCmdLine
 	winClass.hIcon				= LoadIcon(NULL, IDI_APPLICATION);
 	winClass.hCursor			= LoadCursor(NULL, IDC_ARROW);
 	winClass.hbrBackground		= (HBRUSH)GetStockObject(BLACK_BRUSH);
-	winClass.lpszMenuName		= "Test";
-	winClass.lpszClassName		= "Test";
+	winClass.lpszMenuName		= NULL;
+	winClass.lpszClassName		= WND_CLASS_NAME;
 	winClass.hIconSm			= LoadIcon(NULL, IDI_APPLICATION);
 
 	if (!RegisterClassEx(&winClass))
@@ -127,8 +131,15 @@ int WINAPI WinMain(HINSTANCE hinstance, HINSTANCE hPrevinstance, LPSTR lpCmdLine
 		return (0);
 	}
 
-	if (!(hWnd = CreateWindowEx(NULL, "Test", NULL, WS_OVERLAPPEDWINDOW, 0, 0, 640, 480,
-								NULL, NULL, hinstance, NULL)))
+	if (!(hWnd = CreateWindowEx(	NULL,
+									WND_CLASS_NAME, 
+									NULL, 
+									WS_OVERLAPPEDWINDOW, 
+									0, 0, 640, 480,
+									NULL, 
+									NULL, 
+									hinstance, 
+									NULL)))
 	{
 		return (0);
 	}
