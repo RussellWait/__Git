@@ -4,6 +4,7 @@
 #include <gl/GL.h>
 #include <gl/GLU.h>
 #include <gl/GLAUX.H>
+#include <stdio.h>
 
 void InitOpenGL()
 {
@@ -19,19 +20,19 @@ void InitOpenGL()
 								// glEnable不能写在glBegin和glEnd之间
 
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);	// 在图像与速度之间选择
-														//		GL_POINT_SMOOTH_HINT
-														//		GL_LINE_SHOOTH_HINT
-														//		GL_POLYGON_SMOOTH_HINT
-														//		以上三个参数指定在进行反锯齿操作中 点、线、多边形的抽样质量
+														//	GL_POINT_SMOOTH_HINT
+														//	GL_LINE_SHOOTH_HINT
+														//	GL_POLYGON_SMOOTH_HINT
+														//	以上三个参数指定在进行反锯齿操作中 点、线、多边形的抽样质量
 														//		
-														//		GL_FOG_HINT：烟雾的计算将以像素形势还是顶点形势执行取决于第二个参数
-														//			GL_FASTERST		--以顶点形式
-														//			GL_NICEST		--以像素形式执行
+														//	GL_FOG_HINT：烟雾的计算将以像素形势还是顶点形势执行取决于第二个参数
+														//		GL_FASTERST		--以顶点形式
+														//		GL_NICEST		--以像素形式执行
 														//
-														//		GL_PERSPECTIVE_CORRECTION_HINT：指定颜色与纹理坐标的插值品质
-														//			GL_NICEST		--最高品质
-														//			GL_DONT_CARE	--由OpenGL驱动自己决定
-														//			GL_FASTEST		--使用最快速和最高效率来实现
+														//	GL_PERSPECTIVE_CORRECTION_HINT：指定颜色与纹理坐标的插值品质
+														//		GL_NICEST		--最高品质
+														//		GL_DONT_CARE	--由OpenGL驱动自己决定
+														//		GL_FASTEST		--使用最快速和最高效率来实现
 }
 
 void SetupMatrices(int w, int h)
@@ -42,7 +43,15 @@ void SetupMatrices(int w, int h)
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+}
+
+void Render()
+{
+	glClearColor((rand()%255)/255.0, (rand()%255)/255.0, (rand()%255)/255.0, (rand()%255)/255.0);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	glLoadIdentity();
 	gluLookAt(	0.0f, 0.0f, 0.0f,
-				0.0f, 0.0f, -100.0f,
+				0.0f, 0.0f,	-100.0f,
 				0.0f, 1.0f, 0.0f);
 }

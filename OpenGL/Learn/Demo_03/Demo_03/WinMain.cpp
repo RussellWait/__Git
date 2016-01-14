@@ -20,6 +20,7 @@ HGLRC	hrc;
 ATOM				MyRegisterClass(HINSTANCE hInstance);
 BOOL				InitInstance(HINSTANCE hInstance, int nShowCmd);
 LRESULT CALLBACK	WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+void				setupPixelFormat(HDC hdc);
 
 
 int WINAPI WinMain( __in HINSTANCE hInstance, __in_opt HINSTANCE hPrevInstance, __in LPSTR lpCmdLine, __in int nShowCmd )
@@ -112,7 +113,18 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
 			SetupMatrices(640, 480);
 
+			InitOpenGL();
+			SetTimer(hWnd, 1, 200, NULL);
+
 			return (0);
+		} break;
+
+	case WM_TIMER:
+		{
+			Render();
+
+			// ½»»»»º³åÇø
+			SwapBuffers(hdc);
 		} break;
 
 	case WM_DESTROY:
