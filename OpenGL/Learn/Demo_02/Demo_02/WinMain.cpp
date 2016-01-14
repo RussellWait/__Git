@@ -113,8 +113,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
 			SetupMatrices(640, 480);
 
-			ReleaseDC(hWnd, hdc);
-
 			return (0);
 		} break;
 

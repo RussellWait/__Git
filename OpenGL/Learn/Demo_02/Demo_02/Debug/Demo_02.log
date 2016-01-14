@@ -1,4 +1,4 @@
-﻿生成启动时间为 2016/1/13 21:41:53。
+﻿生成启动时间为 2016/1/14 21:24:42。
      1>项目“E:\Codes\__Git\OpenGL\Learn\Demo_02\Demo_02\Demo_02.vcxproj”在节点 2 上(Build 个目标)。
      1>ClCompile:
          D:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt 3D_Function.cpp
@@ -11,4 +11,4 @@
 
 生成成功。
 
-已用时间 00:00:01.30
+已用时间 00:00:02.25

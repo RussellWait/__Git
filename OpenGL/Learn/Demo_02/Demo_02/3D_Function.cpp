@@ -10,7 +10,7 @@ void SetupMatrices(int w, int h)
 	glMatrixMode(GL_PROJECTION);	// 这个函数解释我们使用什么变换
 									//		GL_PROJECTION		投影矩阵
 
-	// 使用前需要重置矩阵，保证其没有被使用过
+	// 使用前需要重置矩阵，保证其没有被使用过，默认重置的是G_MODELVIEW
 	glLoadIdentity();
 
 	// 设置我们的投影矩阵
