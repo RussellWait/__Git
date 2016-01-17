@@ -114,7 +114,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 			SetupMatrices(640, 480);
 
 			InitOpenGL();
-			SetTimer(hWnd, 1, 200, NULL);
+
+			SetTimer(hWnd, 1, 300, NULL);
 
 			return (0);
 		} break;

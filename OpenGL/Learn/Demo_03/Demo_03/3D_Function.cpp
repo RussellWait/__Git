@@ -48,7 +48,12 @@ void SetupMatrices(int w, int h)
 void Render()
 {
 	glClearColor((rand()%255)/255.0, (rand()%255)/255.0, (rand()%255)/255.0, (rand()%255)/255.0);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	// 清除缓冲区域
+														//		GL_COLOR_BUFFER_BIT		当前可写的颜色缓冲
+														//		GL_DEPTH_BUFFER_BIT		深度缓冲
+														//		GL_ACCUM_BUFFER_BIT		累积缓冲
+														//		GL_STENCIL_BUFFER_BIT	模板缓冲
 
 	glLoadIdentity();
 	gluLookAt(	0.0f, 0.0f, 0.0f,
