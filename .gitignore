@@ -12,8 +12,6 @@
 #*#
 .#*
 .*.swp
-<<<<<<< HEAD
+*.sdf
+*.suo
 .DS_Store
-=======
-.DS_Store
->>>>>>> 337f72701bcf3ce5e3f80965a3b513f51d5752f7
