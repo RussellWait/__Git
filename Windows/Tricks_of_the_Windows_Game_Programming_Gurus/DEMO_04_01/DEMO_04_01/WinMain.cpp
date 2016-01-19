@@ -6,9 +6,11 @@
 
 
 #define WND_CLASS_NAME		"WNDCLASS1"
+#define WND_WIDTH			640
+#define WND_HEIGHT			480
 
 
-HWND hWnd;
+HWND main_window_handle = NULL;
 
 
 ATOM				MyRegisterClass(HINSTANCE hInstance);
@@ -43,18 +45,18 @@ int WINAPI WinMain( __in HINSTANCE hInstance, __in_opt HINSTANCE hPrevInstance, 
 			DispatchMessage(&msg);
 		}
 
-		HDC hdc = GetDC(hWnd);
+		HDC hdc = GetDC(main_window_handle);
 
 		for (int i = 0; i < 1000; i++)
 		{
-			int x = rand()%640;
-			int y = rand()%480;
+			int x = rand()%WND_WIDTH;
+			int y = rand()%WND_HEIGHT;
 			COLORREF color = RGB(rand()%255, rand()%255, rand()%255);
 
 			SetPixel(hdc, x, y, color);
 		}
 
-		ReleaseDC(hWnd, hdc);
+		ReleaseDC(main_window_handle, hdc);
 	}
 
 	return (msg.wParam);
@@ -82,23 +84,23 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 
 BOOL InitInstance(HINSTANCE hInstance, int nShowCmd)
 {
-	hWnd = CreateWindowEx(	NULL,
-							WND_CLASS_NAME,
-							"Pixel Plotting Demo",
-							WS_OVERLAPPEDWINDOW,
-							0, 0, 640, 480,
-							NULL,
-							NULL,
-							hInstance,
-							NULL);
+	main_window_handle = CreateWindowEx(	NULL,
+											WND_CLASS_NAME,
+											"Pixel Plotting Demo",
+											WS_OVERLAPPEDWINDOW,
+											0, 0, WND_WIDTH, WND_HEIGHT,
+											NULL,
+											NULL,
+											hInstance,
+											NULL);
 
-	if (!hWnd)
+	if (!main_window_handle)
 	{
 		return FALSE;
 	}
 
-	ShowWindow(hWnd, nShowCmd);
-	UpdateWindow(hWnd);
+	ShowWindow(main_window_handle, nShowCmd);
+	UpdateWindow(main_window_handle);
 
 	return TRUE;
 }

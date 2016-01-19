@@ -1,0 +1,8 @@
+﻿  WinMain.cpp
+e:\codes\__git\windows\tricks_of_the_windows_game_programming_gurus\demo_04_06\demo_04_06\winmain.cpp(141): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+          d:\program files (x86)\microsoft visual studio 11.0\vc\include\stdio.h(357) : 参见“sprintf”的声明
+e:\codes\__git\windows\tricks_of_the_windows_game_programming_gurus\demo_04_06\demo_04_06\winmain.cpp(148): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+          d:\program files (x86)\microsoft visual studio 11.0\vc\include\stdio.h(357) : 参见“sprintf”的声明
+e:\codes\__git\windows\tricks_of_the_windows_game_programming_gurus\demo_04_06\demo_04_06\winmain.cpp(155): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+          d:\program files (x86)\microsoft visual studio 11.0\vc\include\stdio.h(357) : 参见“sprintf”的声明
+  DEMO_04_06.vcxproj -> E:\Codes\__Git\Windows\Tricks_of_the_Windows_Game_Programming_Gurus\DEMO_04_06\Debug\DEMO_04_06.exe
