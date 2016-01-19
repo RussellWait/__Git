@@ -1,9 +1,15 @@
-﻿  WinMain.cpp
-  3D_Function.h
-  3D_Function.cpp
-  正在生成代码...
-Debug\3D_Function.obj : warning LNK4042: 对象被多次指定；已忽略多余的指定
-WinMain.obj : error LNK2019: 无法解析的外部符号 "void __cdecl InitOpenGL(void)" (?InitOpenGL@@YAXXZ)，该符号在函数 "long __stdcall WndProc(struct HWND__ *,unsigned int,unsigned int,long)" (?WndProc@@YGJPAUHWND__@@IIJ@Z) 中被引用
-WinMain.obj : error LNK2019: 无法解析的外部符号 "void __cdecl SetupMatrices(int,int)" (?SetupMatrices@@YAXHH@Z)，该符号在函数 "long __stdcall WndProc(struct HWND__ *,unsigned int,unsigned int,long)" (?WndProc@@YGJPAUHWND__@@IIJ@Z) 中被引用
-WinMain.obj : error LNK2019: 无法解析的外部符号 "int __cdecl LoadGLTextures(char *)" (?LoadGLTextures@@YAHPAD@Z)，该符号在函数 "long __stdcall WndProc(struct HWND__ *,unsigned int,unsigned int,long)" (?WndProc@@YGJPAUHWND__@@IIJ@Z) 中被引用
-E:\Codes\__Git\OpenGL\Learn\Demo_07\Debug\Demo_07.exe : fatal error LNK1120: 3 个无法解析的外部命令
+﻿生成启动时间为 2016/1/20 1:22:55。
+     1>项目“D:\Codes\__Git\OpenGL\Learn\Demo_07\Demo_07\Demo_07.vcxproj”在节点 2 上(Build 个目标)。
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt WinMain.cpp
+         WinMain.cpp
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\Codes\__Git\OpenGL\Learn\Demo_07\Debug\Demo_07.exe" /INCREMENTAL /NOLOGO OPENGL32.LIB GLU32.LIB GLAUX.LIB kernel32.lib user32.lib gdi32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\Codes\__Git\OpenGL\Learn\Demo_07\Debug\Demo_07.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\Codes\__Git\OpenGL\Learn\Demo_07\Debug\Demo_07.lib" /MACHINE:X86 Debug\3D_Function.obj
+         Debug\3D_Function.obj
+         Debug\WinMain.obj
+         Demo_07.vcxproj -> D:\Codes\__Git\OpenGL\Learn\Demo_07\Debug\Demo_07.exe
+     1>已完成生成项目“D:\Codes\__Git\OpenGL\Learn\Demo_07\Demo_07\Demo_07.vcxproj”(Build 个目标)的操作。
+
+生成成功。
+
+已用时间 00:00:01.34

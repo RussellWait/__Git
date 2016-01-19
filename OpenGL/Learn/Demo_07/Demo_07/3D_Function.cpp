@@ -10,10 +10,11 @@ GLuint texture[1];		// 产生纹理的ID号
 
 void InitOpenGL()
 {
-	glClearColor(0, 0, 0, 1);
+	glClearColor(0.0f, 0.0f, 0.0f, 0.5f);
 	glClearDepth(1.0f);
 
 	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_TEXTURE_2D);
 
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 }
@@ -39,6 +40,8 @@ int LoadGLTextures(char *fileName)
 		status = TRUE;
 
 		glGenTextures(1, &texture[0]);
+
+		glBindTexture(GL_TEXTURE_2D, texture[0]);
 
 		glTexImage2D(	GL_TEXTURE_2D, 
 						0, 
@@ -68,12 +71,13 @@ int LoadGLTextures(char *fileName)
 
 void Render()
 {
-	glClear(GL_COLOR | GL_DEPTH);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glLoadIdentity();
 	gluLookAt(	0.0f, 0.0f, 0.0f,
 				0.0f, 0.0f, -100.0f,
 				0.0f, 1.0f, 0.0f);
+	glTranslated(0.0f, 0.0f, -5.0f);
 
 	glBindTexture(GL_TEXTURE_2D, texture[0]);
 	glBegin(GL_QUADS);

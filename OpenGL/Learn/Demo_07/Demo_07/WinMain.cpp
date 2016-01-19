@@ -110,7 +110,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 			wglMakeCurrent(hdc, hrc);
 
 			InitOpenGL();
-			SetupMatrices(WND_WIDTH, WND_HEIGHT);
+			SetupMatrices(WND_HEIGHT, WND_HEIGHT);
 
 			LoadGLTextures("Resource\\image256.bmp");
 
@@ -121,7 +121,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
 	case WM_TIMER:
 		{
-
+			Render();
+			SwapBuffers(hdc);
 		} break;
 
 	case WM_DESTROY:
