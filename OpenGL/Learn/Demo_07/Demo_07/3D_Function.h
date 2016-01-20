@@ -1,7 +1,7 @@
 #pragma once
 
-void InitOpenGL();
 
+void InitOpenGL();
 
 void SetupMatrices(int w, int h);
 

@@ -1,6 +1,7 @@
 #define WIN32_LEAN_AND_MEAN
 
 #include <windows.h>
+#include <windowsx.h>
 #include <gl/GL.h>
 #include <gl/GLU.h>
 #include <gl/GLAUX.H>
@@ -12,8 +13,8 @@
 #define WND_HEIGHT			480
 
 
-HDC		hdc;
-HGLRC	hrc;
+HDC		main_hdc	= NULL;
+HGLRC	main_hrc	= NULL;
 
 
 ATOM				MyRegisterClass(HINSTANCE hInstance);
@@ -22,11 +23,11 @@ LRESULT CALLBACK	WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 void				SetupPixelFormat(HDC hdc);
 
 
-int WINAPI WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nShowCmd )
+int WINAPI WinMain( __in HINSTANCE hInstance, __in_opt HINSTANCE hPrevInstance, __in LPSTR lpCmdLine, __in int nShowCmd )
 {
 	MSG msg;
 
-	if(!MyRegisterClass(hInstance))
+	if (!MyRegisterClass(hInstance))
 	{
 		return FALSE;
 	}
@@ -75,17 +76,15 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 
 BOOL InitInstance(HINSTANCE hInstance, int nShowCmd)
 {
-	HWND hWnd;
-
-	hWnd = CreateWindowEx(	NULL,
-							WND_CLASS_NAME,
-							NULL,
-							WS_OVERLAPPEDWINDOW,
-							0, 0, WND_WIDTH, WND_HEIGHT,
-							NULL,
-							NULL,
-							hInstance,
-							NULL);
+	HWND hWnd = CreateWindowEx(	NULL,
+								WND_CLASS_NAME,
+								NULL,
+								WS_OVERLAPPEDWINDOW,
+								0, 0, WND_WIDTH, WND_HEIGHT,
+								NULL,
+								NULL,
+								hInstance,
+								NULL);
 
 	if (!hWnd)
 	{
@@ -104,31 +103,34 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	{
 	case WM_CREATE:
 		{
-			hdc = GetDC(hWnd);
-			SetupPixelFormat(hdc);
-			hrc = wglCreateContext(hdc);
-			wglMakeCurrent(hdc, hrc);
+			main_hdc = GetDC(hWnd);
+			SetupPixelFormat(main_hdc);
+			main_hrc = wglCreateContext(main_hdc);
+			wglMakeCurrent(main_hdc, main_hrc);
 
 			InitOpenGL();
 			SetupMatrices(WND_HEIGHT, WND_HEIGHT);
 
-			LoadGLTextures("Resource\\image256.bmp");
+			LoadGLTextures("Resource/image256.bmp");
 
-			SetTimer(hWnd, 0, 1, NULL);
+			SetTimer(hWnd, 1, 1, NULL);
 
-			return 0;
+			return (0);
 		} break;
 
 	case WM_TIMER:
 		{
 			Render();
-			SwapBuffers(hdc);
+			SwapBuffers(main_hdc);
+
+			return(0);
 		} break;
 
 	case WM_DESTROY:
 		{
 			PostQuitMessage(0);
-			return 0;
+
+			return (0);
 		} break;
 
 	default:
@@ -140,8 +142,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
 void SetupPixelFormat(HDC hdc)
 {
-	int pixelFormat;
-
 	PIXELFORMATDESCRIPTOR pfd = 
 	{
 		sizeof(PIXELFORMATDESCRIPTOR),
@@ -156,6 +156,6 @@ void SetupPixelFormat(HDC hdc)
 		0, 0, 0
 	};
 
-	pixelFormat = ChoosePixelFormat(hdc, &pfd);
+	int pixelFormat = ChoosePixelFormat(hdc, &pfd);
 	SetPixelFormat(hdc, pixelFormat, &pfd);
 }
