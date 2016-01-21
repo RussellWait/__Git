@@ -12,7 +12,10 @@
 #*#
 .#*
 .*.swp
+*.obj
+*.pdb
+*.log
+*.tlog
 *.sdf
 *.suo
 .DS_Store
-[Dd]ebug
