@@ -5,6 +5,7 @@
 #include <gl/GL.h>
 #include <gl/GLU.h>
 #include <gl/GLAUX.H>
+#include "3D_Function.h"
 
 
 #define WND_CLASS_NAME		"Test"
@@ -19,10 +20,10 @@ HGLRC	main_hrc;
 ATOM				MyRegisterClass(HINSTANCE hInstance);
 BOOL				InitInstance(HINSTANCE hInstance, int nShowCmd);
 LRESULT CALLBACK	WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
-void				SetupPixelFormat(HWND hWnd);
+void				SetupPixelFormat(HDC hdc);
 
 
-int WinMain( __in HINSTANCE hInstance, __in_opt HINSTANCE hPrevInstance, __in LPSTR lpCmdLine, __in int nShowCmd )
+int WINAPI WinMain( __in HINSTANCE hInstance, __in_opt HINSTANCE hPrevInstance, __in LPSTR lpCmdLine, __in int nShowCmd )
 {
 	MSG msg;
 
@@ -55,20 +56,105 @@ int WinMain( __in HINSTANCE hInstance, __in_opt HINSTANCE hPrevInstance, __in LP
 
 ATOM MyRegisterClass(HINSTANCE hInstance)
 {
+	WNDCLASSEX wndClass;
 
+	wndClass.cbSize			= sizeof(WNDCLASSEX);
+	wndClass.style			= CS_DBLCLKS | CS_OWNDC | CS_HREDRAW | CS_VREDRAW;
+	wndClass.lpfnWndProc	= WndProc;
+	wndClass.cbClsExtra		= 0;
+	wndClass.cbWndExtra		= 0;
+	wndClass.hInstance		= hInstance;
+	wndClass.hIcon			= LoadIcon(NULL, IDI_APPLICATION);
+	wndClass.hCursor		= LoadCursor(NULL, IDC_ARROW);
+	wndClass.hbrBackground	= (HBRUSH)GetStockObject(BLACK_BRUSH);
+	wndClass.lpszMenuName	= NULL;
+	wndClass.lpszClassName	= WND_CLASS_NAME;
+	wndClass.hIconSm		= LoadIcon(NULL, IDI_APPLICATION);
+
+	return RegisterClassEx(&wndClass);
 }
 
 BOOL InitInstance(HINSTANCE hInstance, int nShowCmd)
 {
+	HWND hWnd = CreateWindowEx(	NULL,
+								WND_CLASS_NAME,
+								NULL,
+								WS_OVERLAPPEDWINDOW,
+								0, 0, WND_WIDTH, WND_HEIGHT,
+								NULL,
+								NULL,
+								hInstance,
+								NULL);
 
+	if (!hWnd)
+	{
+		return FALSE;
+	}
+
+	ShowWindow(hWnd, nShowCmd);
+	UpdateWindow(hWnd);
+
+	return TRUE;
 }
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
+	switch (msg)
+	{
+	case WM_CREATE:
+		{
+			main_hdc = GetDC(hWnd);
+			SetupPixelFormat(main_hdc);
+			main_hrc = wglCreateContext(main_hdc);
+			wglMakeCurrent(main_hdc, main_hrc);
 
+			InitOpenGL();
+			SetupMatrices(WND_HEIGHT, WND_HEIGHT);
+
+			LoadGLTextures("Resource/image256.bmp");
+
+			SetTimer(hWnd, 0, 1, NULL);
+
+			return 0;
+		} break;
+
+	case WM_TIMER:
+		{
+			Render();
+			SwapBuffers(main_hdc);
+
+			return 0;
+		} break;
+
+	case WM_DESTROY:
+		{
+			PostQuitMessage(0);
+			return 0;
+		} break;
+
+	default:
+		break;
+	}
+
+	return DefWindowProc(hWnd, msg, wParam, lParam);
 }
 
-void SetupPixelFormat(HWND hWnd)
+void SetupPixelFormat(HDC hdc)
 {
+	PIXELFORMATDESCRIPTOR pfd = 
+	{
+		sizeof(PIXELFORMATDESCRIPTOR),
+		1,
+		PFD_DRAW_TO_WINDOW | PFD_SUPPORT_OPENGL | PFD_DOUBLEBUFFER,
+		PFD_TYPE_RGBA,
+		32, 0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0,
+		32, 0, 0,
+		PFD_MAIN_PLANE,
+		0,
+		0, 0, 0
+	};
 
+	int pixelFormat = ChoosePixelFormat(hdc, &pfd);
+	SetPixelFormat(hdc, pixelFormat, &pfd);
 }

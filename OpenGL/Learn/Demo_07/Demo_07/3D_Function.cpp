@@ -59,17 +59,22 @@ int LoadGLTextures(char *fileName)
 						GL_UNSIGNED_BYTE,			// 制定像素数据类型
 						textureImages[0]->data);	// 内存中像素数据指针
 
-		// 缩放处理方式（放大时采用线性过滤方式）
+		// 贴图处理方式
 		glTexParameteri(GL_TEXTURE_2D,				// 纹理类型
-						GL_TEXTURE_MIN_FILTER,		// 处理方式
+						GL_TEXTURE_MIN_FILTER,		// 处理策略
 													//		GL_TEXTURE_WRAP_S		S方向上的贴图模式
 													//		GL_TEXTURE_WRAP_T		T方向上的贴图模式
 													//		GL_TEXTURE_CLAMP		将纹理坐标限制在0.0~1.0之内
 													//		GL_TEXTURE_MIN_FILTER	缩小过滤
 													//		GL_TEXTURE_MAG_FILTER	放大过滤
-						GL_LINEAR);					// 线性过滤
+						GL_LINEAR);					// 过滤方式
+													//		GL_NEARES					在mip基层上使用最邻近过滤
+													//		GL_LINEAR					在mip基层上使用线性过滤
+													//		GL_NEAREST_MIPMAP_NEAREST	选择最邻近mip层，使用邻近过滤
+													//		GL_NEAREST_MIPMAP_LINEAR	在mip层之间使用线性插值，并使用邻近过滤
+													//		GL_LINEAR_MIPMAP_NEAREST	选择最邻近的mip，使用线性过滤
+													//		GL_LINEAR_MIPMAP_LINEAR		在mip层之间使用线性插值，并使用线性过滤
 
-		// 缩放处理方式（缩小时采用线性过滤方式）
 		glTexParameteri(GL_TEXTURE_2D,
 						GL_TEXTURE_MAG_FILTER,
 						GL_LINEAR);
@@ -102,7 +107,7 @@ void Render()
 	// 绑定纹理
 	glBindTexture(GL_TEXTURE_2D, textures[0]);
 
-	// 坐标影视
+	// 坐标映射
 	glBegin(GL_QUADS);
 	glTexCoord2f(0.0f, 0.0f);
 	glVertex3f(-1.0f, -1.0f, 1.0f);
