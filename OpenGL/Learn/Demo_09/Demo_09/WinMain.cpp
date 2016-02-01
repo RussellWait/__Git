@@ -19,7 +19,7 @@ HGLRC	main_hrc;
 ATOM				MyRegisterClass(HINSTANCE hInstance);
 BOOL				InitInstance(HINSTANCE hInstance, int nShowCmd);
 LRESULT CALLBACK	WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
-void				setupPixelFormate(HDC hdc);
+void                SetupPixelFormat(HDC hdc);
 
 
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nShowCmd)
@@ -103,14 +103,15 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
         case WM_CREATE:
         {
             main_hdc = GetDC(hWnd);
-            setupPixelFormate(main_hdc);
-            
+            SetupPixelFormat(main_hdc);
+
             main_hrc = wglCreateContext(main_hdc);
             wglMakeCurrent(main_hdc, main_hrc);
 
-            InitOpengl();
+            InitOpenGL();
             SetupMatrices(WND_WIDTH, WND_WIDTH);
-            loadTextures("Resource/image256.bmp");
+
+            LoadTextures("Resource/image256.bmp");
 
             SetTimer(hWnd, 1, 1, NULL);
 
@@ -138,7 +139,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
     return DefWindowProc(hWnd, msg, wParam, lParam);
 }
 
-void setupPixelFormate(HDC hdc)
+void SetupPixelFormat(HDC hdc)
 {
     int pixelFormate;
 

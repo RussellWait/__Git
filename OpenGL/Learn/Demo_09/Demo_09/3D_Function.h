@@ -1,10 +1,9 @@
 #pragma once
 
-
-void InitOpengl();
+void InitOpenGL();
 
 void SetupMatrices(int w, int h);
 
 void Render();
 
-int loadTextures(char *fileName);
+int LoadTextures(char *fileName);

@@ -5,11 +5,11 @@
 #include <gl/GLAUX.H>
 
 
-float dist = 0.0f;
-GLuint textures[1];
+GLfloat dist = 0.0f;
+GLuint  textures[1];
 
 
-void InitOpengl()
+void InitOpenGL()
 {
     glClearColor(0.0f, 0.0f, 0.0f, 0.5f);
     glClearDepth(1.0f);
@@ -33,30 +33,31 @@ void SetupMatrices(int w, int h)
 void Render()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
     glLoadIdentity();
-    gluLookAt(0.0f, 0.0f, 0.0f,
-              0.0f, 0.0f, -100.f,
-              0.0f, 1.0f, 0.0f);
     glTranslatef(0.0f, 0.0f, dist);
-    
+    gluLookAt(0.0f, 0.0f, 0.0f,
+              0.0f, 0.0f, -100.0f,
+              0.0f, 1.0f, 0.0f);
+
     glBindTexture(GL_TEXTURE_2D, textures[0]);
     glBegin(GL_QUADS);
     glTexCoord2f(0.0f, 0.0f);
-    glVertex3f(-1.0f, -1.0f, 1.0f);
+    glVertex3f(-1.0f, -1.0f, 0.0f);
     glTexCoord2f(1.0f, 0.0f);
-    glVertex3f(1.0f, -1.0f, 1.0f);
+    glVertex3f(1.0f, -1.0f, 0.0f);
     glTexCoord2f(1.0f, 1.0f);
-    glVertex3f(1.0f, 1.0f, 1.0f);
+    glVertex3f(1.0f, 1.0f, 0.0f);
     glTexCoord2f(0.0f, 1.0f);
-    glVertex3f(-1.0f, 1.0f, 1.0f);
+    glVertex3f(-1.0f, 1.0f, 0.0f);
     glEnd();
 
-    dist -= 0.5;
+    dist -= 0.5f;
 }
 
-int loadTextures(char *fileName)
+int LoadTextures(char *fileName)
 {
-    BOOL state = FALSE;
+    int state = FALSE;
 
     AUX_RGBImageRec *textureImgs[1];
     if (textureImgs[0] = auxDIBImageLoad(fileName))
@@ -74,18 +75,20 @@ int loadTextures(char *fileName)
                      GL_RGB,
                      GL_UNSIGNED_BYTE,
                      textureImgs[0]->data);
-        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST);
-        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGB, 256, 256, GL_RGB, GL_UNSIGNED_BYTE, textureImgs[0]->data);
 
-        if (textureImgs[0])
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+        gluBuild2DMipmaps(GL_TEXTURE_2D, 3, 256, 256, GL_RGB, GL_UNSIGNED_BYTE, textureImgs[0]->data);
+    }
+
+    if (textureImgs[0])
+    {
+        if (textureImgs[0]->data)
         {
-            if (textureImgs[0]->data)
-            {
-                free(textureImgs[0]->data);
-            }
-            free(textureImgs[0]);
+            free(textureImgs[0]->data);
         }
+        free(textureImgs[0]);
     }
 
     return state;

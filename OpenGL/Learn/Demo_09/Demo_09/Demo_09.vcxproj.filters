@@ -26,5 +26,8 @@
     <ClInclude Include="3D_Function.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Md2.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
