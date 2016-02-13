@@ -5,8 +5,8 @@
 #include <gl/GLAUX.H>
 
 
-GLfloat dist = 0.0f;
-GLuint  textures[1];
+GLuint      textures[1];
+GLfloat     dist = 0.0f;
 
 
 void InitOpenGL()
@@ -35,60 +35,51 @@ void Render()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     glLoadIdentity();
-    glTranslatef(0.0f, 0.0f, dist);
+    glTranslatef(0, 0, dist);
     gluLookAt(0.0f, 0.0f, 0.0f,
-              0.0f, 0.0f, -100.0f,
+              0.0f, 0.0f, -1.0f,
               0.0f, 1.0f, 0.0f);
 
     glBindTexture(GL_TEXTURE_2D, textures[0]);
     glBegin(GL_QUADS);
-    glTexCoord2f(0.0f, 0.0f);
-    glVertex3f(-1.0f, -1.0f, 0.0f);
-    glTexCoord2f(1.0f, 0.0f);
-    glVertex3f(1.0f, -1.0f, 0.0f);
-    glTexCoord2f(1.0f, 1.0f);
-    glVertex3f(1.0f, 1.0f, 0.0f);
-    glTexCoord2f(0.0f, 1.0f);
-    glVertex3f(-1.0f, 1.0f, 0.0f);
+    glTexCoord2d(0.0f, 0.0f);
+    glVertex3d(-1.0f, -1.0f, 0.0f);
+    glTexCoord2d(1.0f, 0.0f);
+    glVertex3d(1.0f, -1.0f, 0.0f);
+    glTexCoord2d(1.0f, 1.0f);
+    glVertex3d(1.0f, 1.0f, 0.0f);
+    glTexCoord2d(0.0f, 1.0f);
+    glVertex3d(-1.0f, 1.0f, 0.0f);
     glEnd();
-
+    
     dist -= 0.5f;
 }
+
 
 int LoadTextures(char *fileName)
 {
     int state = FALSE;
 
-    AUX_RGBImageRec *textureImgs[1];
-    if ( textureImgs[0] = auxDIBImageLoad(fileName) )
+    AUX_RGBImageRec *textureImg[1];
+    if (textureImg[0] = auxDIBImageLoad(fileName))
     {
         state = TRUE;
 
         glGenTextures(1, textures);
         glBindTexture(GL_TEXTURE_2D, textures[0]);
-        glTexImage2D(GL_TEXTURE_2D,
-                     0,
-                     3,
-                     textureImgs[0]->sizeX,
-                     textureImgs[0]->sizeY,
-                     0,
-                     GL_RGB,
-                     GL_UNSIGNED_BYTE,
-                     textureImgs[0]->data);
-
+        glTexImage2D(GL_TEXTURE_2D, 0, 3, textureImg[0]->sizeX, textureImg[0]->sizeY, 0, GL_RGB, GL_UNSIGNED_BYTE, textureImg[0]->data);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINES);
+        gluBuild2DMipmaps(GL_TEXTURE_2D, 3, 256, 256, GL_RGB, GL_UNSIGNED_BYTE, textureImg[0]->data);
 
-        gluBuild2DMipmaps(GL_TEXTURE_2D, 3, 256, 256, GL_RGB, GL_UNSIGNED_BYTE, textureImgs[0]->data);
-    }
-
-    if ( textureImgs[0] )
-    {
-        if ( textureImgs[0]->data )
+        if (textureImg[0])
         {
-            free(textureImgs[0]->data);
+            if (textureImg[0]->data)
+            {
+                free(textureImg[0]->data);
+            }
+            free(textureImg[0]);
         }
-        free(textureImgs[0]);
     }
 
     return state;

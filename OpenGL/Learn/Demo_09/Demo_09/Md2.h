@@ -12,7 +12,7 @@ struct SMD2Header
 
     // 表示纹理的宽高 虽然不同纹理可以被导入
     // 但每个MD2文件模型同一时间只能使用一张纹理
-    int m_iSkinWidthPx;     
+    int m_iSkinWidthPx;
     int m_iSkinHeightPx;
 
     // 描述框架的大小，我们读取的时候一定要知道分配多大的空间
@@ -89,7 +89,7 @@ struct SMD2Frame
     // 析构函数
     ~SMD2Frame()
     {
-        if (m_pVerts)
+        if ( m_pVerts )
         {
             delete[] m_pVerts;
         }
