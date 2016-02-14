@@ -24,12 +24,18 @@
     <ClCompile Include="LoadImage.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Md2.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="3D_Function.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="LoadImage.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Md2.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
