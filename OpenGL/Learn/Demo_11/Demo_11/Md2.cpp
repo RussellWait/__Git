@@ -139,7 +139,7 @@ bool CMD2::Load(const char *szFilename)
     short *sTexCoords = new short[m_Header.m_iNumTexCoords * 2];
     memcpy(sTexCoords, ucpTmpPtr, 4 * m_Header.m_iNumTexCoords);
 
-    for ( int i = 0; i < m_Header.m_iNumTriangles; i++ )
+    for ( int i = 0; i < m_Header.m_iNumTexCoords; i++ )
     {
         m_pTexCoords[i].m_fTex[0] = (float)sTexCoords[2 * i] / m_Header.m_iSkinWidthPx;
         m_pTexCoords[i].m_fTex[1] = (float)sTexCoords[2 * i + 1] / m_Header.m_iSkinHeightPx;
@@ -180,13 +180,18 @@ void CMD2::Render()
     for ( int i = 0; i < m_Header.m_iNumTriangles; i++ )
     {
         // ÎÆÀí×ø±ê
-        glTexCoord2f(m_pTexCoords[m_pTriangles[x].m_sTexIndices[0].m_fTex[0]],
-                     1-m_pTexCoords[m_pTriangles[x].m_sTexIndices[0].m_fTex[1]]);
-        glVertex3fv(m_pFrames[0].m_pVerts[m_pTriangles[x].m_sVertIndices[0]]->m_fVert);
+        glTexCoord2f(m_pTexCoords[m_pTriangles[i].m_sTexIndices[0]].m_fTex[0],
+					 1-m_pTexCoords[m_pTriangles[i].m_sTexIndices[0]].m_fTex[1]);
+        glVertex3fv(m_pFrames[0].m_pVerts[m_pTriangles[i].m_sVertIndices[0]].m_fVert);
 
-        glTexCoord2f();
+        glTexCoord2f(m_pTexCoords[m_pTriangles[i].m_sTexIndices[1]].m_fTex[0],
+					 1-m_pTexCoords[m_pTriangles[i].m_sTexIndices[1]].m_fTex[1]);
+		glVertex3fv(m_pFrames[0].m_pVerts[m_pTriangles[i].m_sVertIndices[1]].m_fVert);
+
+		glTexCoord2f(m_pTexCoords[m_pTriangles[i].m_sTexIndices[2]].m_fTex[0],
+					 1-m_pTexCoords[m_pTriangles[i].m_sTexIndices[2]].m_fTex[1]);
+		glVertex3fv(m_pFrames[0].m_pVerts[m_pTriangles[i].m_sVertIndices[2]].m_fVert);
     }
 
     glEnd();
 }
-

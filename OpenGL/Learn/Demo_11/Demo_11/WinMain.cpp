@@ -6,12 +6,16 @@
 #include <gl/GLU.H>
 #include <gl/GLAUX.H>
 #include "3D_Function.h"
+#include "Md2.h"
 
 
 #define WND_CLASS_NAME      "Test"
 #define WND_WIDTH           640
 #define WND_HEIGHT          480
 
+
+CMD2		g_CMD2;
+CLoadImage	g_Skin;
 
 HDC     main_hdc;
 
@@ -111,6 +115,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
             InitOpenGL();
             SetupMatrices(WND_WIDTH, WND_WIDTH);
+
+			g_CMD2.Load("Resource/hellpig.md2");
+			g_Skin.LoadBMP("Resource/hellpig.bmp");
 
             SetTimer(hWnd, 1, 1, NULL);
 

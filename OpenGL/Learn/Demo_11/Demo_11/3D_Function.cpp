@@ -3,6 +3,10 @@
 #include <gl/GL.H>
 #include <gl/GLU.H>
 #include <gl/GLAUX.H>
+#include "Md2.h"
+
+
+extern CMD2 g_CMD2;
 
 
 void InitOpenGL()
@@ -28,11 +32,12 @@ void SetupMatrices(int w, int h)
 
 void Render()
 {
-    glClear(GL_COLOR | GL_DEPTH);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
     glTranslatef(0.0f, 0.0f, -5.0f);
     gluLookAt(0.0f, 0.0f, 0.0f,
               0.0f, 0.0f, -1.0f,
               0.0f, 1.0f, 0.0f);
 
+	g_CMD2.Render();
 }
