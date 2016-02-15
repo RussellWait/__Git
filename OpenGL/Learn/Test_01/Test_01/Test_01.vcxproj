@@ -77,7 +77,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="3D_Function.cpp" />
+    <ClCompile Include="LoadImage.cpp" />
+    <ClCompile Include="MD2.cpp" />
     <ClCompile Include="WinMain.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="3D_Function.h" />
+    <ClInclude Include="LoadImage.h" />
+    <ClInclude Include="MD2.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
