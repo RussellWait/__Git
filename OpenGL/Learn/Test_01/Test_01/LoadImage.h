@@ -6,6 +6,7 @@
 
 class CLoadImage
 {
+public:
     unsigned int    m_uiWidth;
     unsigned int    m_uiHeight;
     unsigned int    m_uiFileLen;

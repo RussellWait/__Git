@@ -36,8 +36,10 @@ struct SMD2Vert
 
 struct SMD2Frame
 {
-	char m_caName[16];
-	SMD2Vert *m_pVerts;
+//     float       m_fScale[3];
+//     float       m_fTrans[3];
+	char        m_caName[16];
+	SMD2Vert    *m_pVerts;
 
 	SMD2Frame()
 	{
@@ -55,21 +57,42 @@ struct SMD2Frame
 
 struct SMD2Tri
 {
-
+    unsigned short m_sVertIndices[3];
+    unsigned short m_sTexIndices[3];
 };
 
-struct SMD2Coord
+struct SMD2TexCoord
 {
-
+    float m_fTex[2];
 };
 
 struct SMD2Skin
 {
-
+    char m_caSkin[64];
+    CLoadImage m_Image;
 };
 
 
 class CMD2
 {
+public:
+    CMD2();
+    ~CMD2();
 
+    bool Load(const char *szFileName);
+    void Render();
+    void Render(unsigned int uiFrame);
+    void Animate(float fSpeed = 30.0f, unsigned int uiStartFrame = 0, unsigned int uiEndFrame = 0, bool bLoop = true);
+
+    float my_timer;
+
+private:
+    SMD2Header      m_Header;
+    SMD2Frame       *m_pFrames;
+    SMD2Tri         *m_pTriangles;
+    SMD2TexCoord    *m_pTexCoords;
+    SMD2Skin        *m_pSkins;
+    SMD2Vert        *m_pVerts;
+
+    unsigned int    m_uiSkin;
 };
