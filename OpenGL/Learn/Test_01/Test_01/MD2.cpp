@@ -47,9 +47,23 @@ CMD2::~CMD2()
 
 bool CMD2::Load(const char *szFileName)
 {
-    bool state = false;
+	unsigned char	*ucpBuffer	= NULL;
+	unsigned char	*ucpPtr		= NULL;
+	unsigned char	*ucpTmpPtr	= NULL;
+	FILE			*f			= NULL;
+	int				iFileSize	= 0;
 
-    return state;
+	if ( !(f = fopen(szFileName, "rb")) )
+	{
+		return false;
+	}
+
+	// 文件大小
+	int iStart = ftell(f);
+	fseek(f, 0, SEEK_END);
+	int iEnd = ftell(f);
+	fseek(f, 0, SEEK_SET);
+	iFileSize = iEnd = iStart;
 }
 
 void CMD2::Render()
