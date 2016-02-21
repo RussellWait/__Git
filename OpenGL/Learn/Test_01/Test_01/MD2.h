@@ -3,6 +3,10 @@
 #include "LoadImage.h"
 
 
+#define MD2_MAGIC_NUM   844121161
+#define MD2_VERSION     8
+
+
 struct SMD2Header
 {
 	int	m_iMagicNum;	// Always IDP2£¨844121161£©
@@ -36,8 +40,6 @@ struct SMD2Vert
 
 struct SMD2Frame
 {
-//     float       m_fScale[3];
-//     float       m_fTrans[3];
 	char        m_caName[16];
 	SMD2Vert    *m_pVerts;
 

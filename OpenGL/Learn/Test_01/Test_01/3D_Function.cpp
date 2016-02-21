@@ -3,6 +3,10 @@
 #include <gl/GL.H>
 #include <gl/GLU.H>
 #include <gl/GLAUX.H>
+#include "MD2.h"
+
+
+extern CMD2     g_MD2;
 
 
 void InitOpenGL()
@@ -26,9 +30,10 @@ void InitOpenGL()
 
 void SetupMatrices(int w, int h)
 {
+    glViewport(0, 0, w, h);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    gluPerspective(45.0f, (GLdouble)w / (GLdouble)h, 0.1f, 100.0f);
+    gluPerspective(45.0f, (GLdouble)w / (GLdouble)h, 0.1f, 1000.0f);
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
@@ -37,11 +42,15 @@ void SetupMatrices(int w, int h)
 float rotate_angle = 0.0f;
 void Render()
 {
+    static unsigned int uiStartFrame = 0, uiEndFrame = 182;
+    static float fAnimSpeed = 16.0f;
+
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
     glTranslatef(0.0f, -0.75f, -5.0f);
 	glRotatef(rotate_angle, 0.0f, 1.0f, 0.0f);
 	rotate_angle -= 0.1f;
 
-
+    //g_MD2.Render();
+    g_MD2.Animate(fAnimSpeed, uiStartFrame, uiEndFrame, true);
 }

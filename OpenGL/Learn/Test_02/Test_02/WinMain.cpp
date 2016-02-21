@@ -6,23 +6,20 @@
 #include <gl/GLU.H>
 #include <gl/GLAUX.H>
 #include "3D_Function.h"
-#include "MD2.h"
 
 
-#define WND_CLASS_NAME		"Test"
-#define WND_WIDTH			800
-#define WND_HEIGHT			600
+#define WND_CLASS_NAME      "Test"
+#define WND_WIDTH           800
+#define WND_HEIGHT          600
 
 
-ATOM				MyRegisterClass(HINSTANCE hInstance);
-BOOL				InitInstance(HINSTANCE hInstance, int nShowCmd);
-LRESULT CALLBACK	WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
-BOOL				SetupPixcelFormat(HDC hdc);
+ATOM                MyRegisterClass(HINSTANCE hInstance);
+BOOL                InitInstance(HINSTANCE hInstance, int nShowCmd);
+LRESULT CALLBACK    WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
+BOOL                SetupPixelFormat(HDC hdc);
 
 
-HDC		    main_hdc;
-CMD2        g_MD2;
-CLoadImage  g_Skin;
+HDC         main_hdc;
 
 
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nShowCmd)
@@ -60,34 +57,33 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 {
     WNDCLASSEX wndClass;
 
-    wndClass.cbSize			= sizeof(WNDCLASSEX);
-    wndClass.style			= CS_DBLCLKS | CS_OWNDC | CS_HREDRAW | CS_VREDRAW;
-    wndClass.lpfnWndProc	= WndProc;
-    wndClass.cbClsExtra		= 0;
-    wndClass.cbWndExtra		= 0;
-    wndClass.hInstance		= hInstance;
-    wndClass.hIcon			= LoadIcon(NULL, IDI_APPLICATION);
-    wndClass.hCursor		= LoadCursor(NULL, IDC_ARROW);
-    wndClass.hbrBackground	= (HBRUSH)GetStockObject(BLACK_BRUSH);
-    wndClass.lpszMenuName	= NULL;
-    wndClass.lpszClassName	= WND_CLASS_NAME;
-    wndClass.hIconSm		= LoadIcon(NULL, IDI_APPLICATION);
+    wndClass.cbSize         = sizeof(WNDCLASSEX);
+    wndClass.style          = CS_DBLCLKS | CS_OWNDC | CS_HREDRAW | CS_VREDRAW;
+    wndClass.lpfnWndProc    = WndProc;
+    wndClass.cbClsExtra     = 0;
+    wndClass.cbWndExtra     = 0;
+    wndClass.hInstance      = hInstance;
+    wndClass.hIcon          = LoadIcon(NULL, IDI_APPLICATION);
+    wndClass.hCursor        = LoadCursor(NULL, IDC_ARROW);
+    wndClass.hbrBackground  = (HBRUSH)GetStockObject(BLACK_BRUSH);
+    wndClass.lpszMenuName   = NULL;
+    wndClass.lpszClassName  = WND_CLASS_NAME;
+    wndClass.hIconSm        = LoadIcon(NULL, IDI_APPLICATION);
 
     return RegisterClassEx(&wndClass);
 }
 
 BOOL InitInstance(HINSTANCE hInstance, int nShowCmd)
 {
-    HWND hWnd = CreateWindowEx(NULL,
-                               WND_CLASS_NAME,
-                               NULL,
-                               WS_OVERLAPPEDWINDOW,
-                               0, 0, WND_WIDTH, WND_HEIGHT,
-                               NULL,
-                               NULL,
-                               hInstance,
+    HWND hWnd = CreateWindowEx(NULL, 
+                               WND_CLASS_NAME, 
+                               NULL, 
+                               WS_OVERLAPPEDWINDOW, 
+                               0, 0, WND_WIDTH, WND_HEIGHT, 
+                               NULL, 
+                               NULL, 
+                               hInstance, 
                                NULL);
-
     if ( !hWnd )
     {
         return FALSE;
@@ -106,19 +102,15 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         case WM_CREATE:
         {
             main_hdc = GetDC(hWnd);
-            SetupPixcelFormat(main_hdc);
+            SetupPixelFormat(main_hdc);
 
             HGLRC hrc = wglCreateContext(main_hdc);
             wglMakeCurrent(main_hdc, hrc);
 
             InitOpenGL();
-            SetupMatrices(WND_HEIGHT, WND_HEIGHT);
+            SetupMatrices(WND_WIDTH, WND_HEIGHT);
 
-            if ( g_MD2.Load("hellpig.md2") )
-            {
-                g_Skin.LoadBMP("hellpig.bmp");
-                SetTimer(hWnd, 1, 1, NULL);
-            }
+            SetTimer(hWnd, 1, 1, NULL);
 
             return 0;
         } break;
@@ -144,16 +136,16 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     return DefWindowProc(hWnd, message, wParam, lParam);
 }
 
-BOOL SetupPixcelFormat(HDC hdc)
+BOOL SetupPixelFormat(HDC hdc)
 {
     PIXELFORMATDESCRIPTOR pfd =
     {
         sizeof(PIXELFORMATDESCRIPTOR),
         1,
-        PFD_DRAW_TO_WINDOW | PFD_SUPPORT_OPENGL | PFD_STEREO | PFD_DOUBLEBUFFER,
+        PFD_DRAW_TO_WINDOW | PFD_SUPPORT_OPENGL | PFD_DOUBLEBUFFER,
         PFD_TYPE_RGBA,
         32, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0,
+        0, 0, 0, 0,
         32, 0, 0,
         PFD_MAIN_PLANE,
         0,
