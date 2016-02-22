@@ -1,6 +1,6 @@
 #include "Matrix.h"
-#include <windows.h>
-#include <math.h>
+#include "Vector.h"
+#include "Quaternion.h"
 #include <assert.h>
 
 
@@ -29,9 +29,9 @@ inline CMatrix4X4::CMatrix4X4()
     memset(m_fMat, 0, sizeof(float[16]));
 }
 
-inline CMatrix4X4::CMatrix4X4(const CMatrix4X4 &mat)
+inline CMatrix4X4::CMatrix4X4(const CMatrix4X4 &rMat)
 {
-    *this = mat;
+	*this = rMat;
 }
 
 inline CMatrix4X4::CMatrix4X4(float f11, float f12, float f13, float f14,
@@ -55,6 +55,11 @@ inline CMatrix4X4::CMatrix4X4(float f11, float f12, float f13, float f14,
     m_fMat[13] = f42;
     m_fMat[14] = f43;
     m_fMat[15] = f44;
+}
+
+inline float *CMatrix4X4::Get()
+{
+	return m_fMat;
 }
 
 inline void CMatrix4X4::Zero()
@@ -132,10 +137,29 @@ inline void CMatrix4X4::InverseTranslateVec(float *fpVec)
     fpVec[2] -= m_fMat[14];
 }
 
-inline const CMatrix4X4 CMatrix4X4::operator *(const CMatrix4X4 &mat) const
+inline void CMatrix4X4::FromQuaternion(CQuaternion &rQuat)
+{
+	float *fQ = rQuat.Get();
+
+	m_fMat[0] = 1.0f - 2.0f * (fQ[1] * fQ[1] + fQ[2] * fQ[2]);
+	m_fMat[1] = 2.0f * (fQ[0] * fQ[1] - fQ[2] * fQ[3]);
+	m_fMat[2] = 2.0f * (fQ[0] * fQ[2] + fQ[1] * fQ[3]);
+
+	m_fMat[4] = 2.0f * (fQ[0] * fQ[1] + fQ[2] * fQ[3]);
+	m_fMat[5] = 1.0f - 2.0f * (fQ[0] * fQ[0] + fQ[2] * fQ[2]);
+	m_fMat[6] = 2.0f * (fQ[1] * fQ[2] - fQ[0] * fQ[3]);
+
+	m_fMat[8] = 2.0f * (fQ[0] * fQ[2] - fQ[1] * fQ[3]);
+	m_fMat[9] = 2.0f * (fQ[1] * fQ[2] + fQ[0] * fQ[3]);
+	m_fMat[10] = 1.0f - 2.0f * (fQ[0] * fQ[0] + fQ[1] * fQ[1]);
+
+	m_fMat[15] = 1.0f;
+}
+
+inline const CMatrix4X4 CMatrix4X4::operator *(const CMatrix4X4 &rMat) const
 {
     const float *m1 = m_fMat;
-    const float *m2 = mat.m_fMat;
+	const float *m2 = rMat.m_fMat;
 
     return CMatrix4X4((m1[0] * m2[0] + m1[4] * m2[1] + m1[8] * m2[2] + m1[12] * m2[3]),
                       (m1[1] * m2[0] + m1[5] * m2[1] + m1[9] * m2[2] + m1[13] * m2[3]),

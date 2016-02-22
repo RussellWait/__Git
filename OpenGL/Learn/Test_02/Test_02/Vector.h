@@ -1,5 +1,4 @@
 #pragma once
-
 #pragma pack(push, packing)
 #pragma pack(1)
 
@@ -18,9 +17,9 @@ public:
     float *Get();
     void Set(float *fpVec);
 
-    void Transform3(const CMatrix3X3 &mat);
-    void Transform3(const CMatrix4X4 &mat);
-    void Transform4(const CMatrix4X4 &mat);
+    void Transform3(const CMatrix3X3 &rMat);
+	void Transform3(const CMatrix4X4 &rMat);
+	void Transform4(const CMatrix4X4 &rMat);
 
 private:
     float m_fVec[3];

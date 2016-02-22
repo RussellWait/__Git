@@ -1,5 +1,3 @@
-#pragma once
-
 #include "Vector.h"
 #include "Matrix.h"
 
@@ -30,29 +28,29 @@ inline void CVector3::Set(float *fpVec)
     m_fVec[2] = fpVec[2];
 }
 
-inline void CVector3::Transform3(const CMatrix3X3 &mat)
+inline void CVector3::Transform3(const CMatrix3X3 &rMat)
 {
-    CVector3 tmp(mat.m_fMat[0] * m_fVec[0] + mat.m_fMat[3] * m_fVec[1] + mat.m_fMat[6] * m_fVec[2],
-                 mat.m_fMat[1] * m_fVec[0] + mat.m_fMat[4] * m_fVec[1] + mat.m_fMat[7] * m_fVec[2],
-                 mat.m_fMat[2] * m_fVec[0] + mat.m_fMat[5] * m_fVec[1] + mat.m_fMat[8] * m_fVec[2]);
+	CVector3 tmp(rMat.m_fMat[0] * m_fVec[0] + rMat.m_fMat[3] * m_fVec[1] + rMat.m_fMat[6] * m_fVec[2],
+				 rMat.m_fMat[1] * m_fVec[0] + rMat.m_fMat[4] * m_fVec[1] + rMat.m_fMat[7] * m_fVec[2],
+				 rMat.m_fMat[2] * m_fVec[0] + rMat.m_fMat[5] * m_fVec[1] + rMat.m_fMat[8] * m_fVec[2]);
 
     *this = tmp;
 }
 
-inline void CVector3::Transform3(const CMatrix4X4 &mat)
+inline void CVector3::Transform3(const CMatrix4X4 &rMat)
 {
-    CVector3 tmp(mat.m_fMat[0] * m_fVec[0] + mat.m_fMat[4] * m_fVec[1] + mat.m_fMat[8] * m_fVec[2],
-                 mat.m_fMat[1] * m_fVec[0] + mat.m_fMat[5] * m_fVec[1] + mat.m_fMat[9] * m_fVec[2],
-                 mat.m_fMat[2] * m_fVec[0] + mat.m_fMat[6] * m_fVec[1] + mat.m_fMat[10] * m_fVec[2]);
+	CVector3 tmp(rMat.m_fMat[0] * m_fVec[0] + rMat.m_fMat[4] * m_fVec[1] + rMat.m_fMat[8] * m_fVec[2],
+				 rMat.m_fMat[1] * m_fVec[0] + rMat.m_fMat[5] * m_fVec[1] + rMat.m_fMat[9] * m_fVec[2],
+				 rMat.m_fMat[2] * m_fVec[0] + rMat.m_fMat[6] * m_fVec[1] + rMat.m_fMat[10] * m_fVec[2]);
 
     *this = tmp;
 }
 
-inline void CVector3::Transform4(const CMatrix4X4 &mat)
+inline void CVector3::Transform4(const CMatrix4X4 &rMat)
 {
-    CVector3 tmp(mat.m_fMat[0] * m_fVec[0] + mat.m_fMat[4] * m_fVec[1] + mat.m_fMat[8] * m_fVec[2] + mat.m_fMat[12],
-                 mat.m_fMat[1] * m_fVec[0] + mat.m_fMat[5] * m_fVec[1] + mat.m_fMat[9] * m_fVec[2] + mat.m_fMat[13],
-                 mat.m_fMat[2] * m_fVec[0] + mat.m_fMat[6] * m_fVec[1] + mat.m_fMat[10] * m_fVec[2] + mat.m_fMat[14]);
+	CVector3 tmp(rMat.m_fMat[0] * m_fVec[0] + rMat.m_fMat[4] * m_fVec[1] + rMat.m_fMat[8] * m_fVec[2] + rMat.m_fMat[12],
+				 rMat.m_fMat[1] * m_fVec[0] + rMat.m_fMat[5] * m_fVec[1] + rMat.m_fMat[9] * m_fVec[2] + rMat.m_fMat[13],
+				 rMat.m_fMat[2] * m_fVec[0] + rMat.m_fMat[6] * m_fVec[1] + rMat.m_fMat[10] * m_fVec[2] + rMat.m_fMat[14]);
 
     *this = tmp;
 }

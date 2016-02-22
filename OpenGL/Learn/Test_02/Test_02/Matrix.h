@@ -17,11 +17,13 @@ class CMatrix4X4
 {
 public:
     CMatrix4X4();
-    CMatrix4X4(const CMatrix4X4 &mat);
+    CMatrix4X4(const CMatrix4X4 &rMat);
     CMatrix4X4(float f11, float f12, float f13, float f14,
                float f21, float f22, float f23, float f24,
                float f31, float f32, float f33, float f34,
                float f41, float f42, float f43, float f44);
+
+	float *Get();
 
     void Zero();
     void Identity();
@@ -34,7 +36,9 @@ public:
     void SetTranslation(float *fpTrans);
     void InverseTranslateVec(float *fpVec);
 
-    const CMatrix4X4 operator *(const CMatrix4X4 &mat) const;
+	void FromQuaternion(CQuaternion &rQuat);
+
+    const CMatrix4X4 operator *(const CMatrix4X4 &rMat) const;
 
 private:
     float m_fMat[16];
