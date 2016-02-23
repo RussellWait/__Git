@@ -28,6 +28,9 @@ private:
 	friend CVector3;
 	friend CMatrix3X3;
 	friend CMatrix4X4;
+
+    friend CQuaternion LERP(CQuaternion &rQuat0, CQuaternion &rQuat1, float fInterp);
+    friend CQuaternion SLERP(CQuaternion &rQuat0, CQuaternion &rQuat1, float fInterp);
 };
 
 
