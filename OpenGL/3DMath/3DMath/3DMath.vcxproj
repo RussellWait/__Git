@@ -81,9 +81,12 @@
   <ItemGroup>
     <ClInclude Include="EulerAngles.h" />
     <ClInclude Include="MathUtil.h" />
+    <ClInclude Include="Quaternion.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="EulerAngles.inl" />
+    <None Include="EulerAngles.inl">
+      <FileType>Document</FileType>
+    </None>
     <None Include="MathUtil.inl">
       <FileType>Document</FileType>
     </None>

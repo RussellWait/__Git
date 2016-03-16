@@ -26,6 +26,9 @@
     <ClInclude Include="EulerAngles.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Quaternion.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="MathUtil.inl">
