@@ -1,0 +1,6 @@
+#ifndef __EULERANGLES_H_INCLUDED__
+#define __EULERANGLES_H_INCLUDED__
+
+
+
+#endif // !__EULERANGLES_H_INCLUDED__
