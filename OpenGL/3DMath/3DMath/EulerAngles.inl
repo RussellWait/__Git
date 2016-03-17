@@ -1,7 +1,7 @@
 #include <math.h>
 
 #include "MathUtil.h"
-//#include "Quaternion.h"
+#include "Quaternion.h"
 //#include "Matrix4x3.h"
 //#include "RotationMatrix.h"
 

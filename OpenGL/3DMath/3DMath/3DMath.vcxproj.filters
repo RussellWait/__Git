@@ -29,12 +29,18 @@
     <ClInclude Include="Quaternion.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="RotationMatrix.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="MathUtil.inl">
       <Filter>头文件</Filter>
     </None>
     <None Include="EulerAngles.inl">
+      <Filter>头文件</Filter>
+    </None>
+    <None Include="Quaternion.inl">
       <Filter>头文件</Filter>
     </None>
   </ItemGroup>
