@@ -20,6 +20,9 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Vector3.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
     <ClInclude Include="MathUtil.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -29,11 +32,17 @@
     <ClInclude Include="Quaternion.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Matrix4x3.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
     <ClInclude Include="RotationMatrix.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Vector3.inl">
+      <Filter>头文件</Filter>
+    </None>
     <None Include="MathUtil.inl">
       <Filter>头文件</Filter>
     </None>
@@ -41,6 +50,12 @@
       <Filter>头文件</Filter>
     </None>
     <None Include="Quaternion.inl">
+      <Filter>头文件</Filter>
+    </None>
+    <None Include="RotationMatrix.inl">
+      <Filter>头文件</Filter>
+    </None>
+    <None Include="Matrix4x3.inl">
       <Filter>头文件</Filter>
     </None>
   </ItemGroup>

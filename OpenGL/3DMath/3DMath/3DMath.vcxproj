@@ -81,17 +81,20 @@
   <ItemGroup>
     <ClInclude Include="EulerAngles.h" />
     <ClInclude Include="MathUtil.h" />
+    <ClInclude Include="Matrix4x3.h" />
     <ClInclude Include="Quaternion.h" />
     <ClInclude Include="RotationMatrix.h" />
+    <ClInclude Include="Vector3.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="EulerAngles.inl">
-      <FileType>Document</FileType>
-    </None>
-    <None Include="MathUtil.inl">
-      <FileType>Document</FileType>
-    </None>
+    <None Include="EulerAngles.inl" />
+    <None Include="MathUtil.inl" />
+    <None Include="Matrix4x3.inl" />
     <None Include="Quaternion.inl" />
+    <None Include="RotationMatrix.inl" />
+    <None Include="Vector3.inl">
+      <FileType>Document</FileType>
+    </None>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
