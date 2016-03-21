@@ -8,6 +8,7 @@ class Quaternion;
 class RotationMatrix;
 
 
+// 假设矩阵最后一行为 [0.0f, 0.0f, 0.0f, 1.0f]的转置
 class Matrix4x3
 {
 public:
