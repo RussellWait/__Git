@@ -27,7 +27,7 @@ public:
 	void setupParentToLocal(const Vector3 &pos, const EulerAngles &orient);
 	void setupParentToLocal(const Vector3 &pos, const RotationMatrix &orient);
 
-	// 构造绕坐标轴旋转的矩阵
+	// 构造绕坐标轴旋转的矩阵（axis 1代表x轴，2代表y轴，3代表z轴）
 	void setupRotate(int axis, float theta);
 
 	// 构造绕任意轴旋转的矩阵

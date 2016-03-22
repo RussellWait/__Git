@@ -42,33 +42,116 @@ inline void Matrix4x3::setupTranslation(const Vector3 &d)
 
 inline void Matrix4x3::setupLocalToParent(const Vector3 &pos, const EulerAngles &orient)
 {
+    RotationMatrix orientMatrix;
+    orientMatrix.setup(orient);
 
+    setupLocalToParent(pos, orientMatrix);
 }
 
 inline void Matrix4x3::setupLocalToParent(const Vector3 &pos, const RotationMatrix &orient)
 {
+    // 复制矩阵的旋转部分
+    // RotationMatrix.inl 中的旋转矩阵为 惯性->物体（父->局部），所以需要转置
+    m11 = orient.m11; m12 = orient.m21; m13 = orient.m31;
+    m21 = orient.m12; m22 = orient.m22; m23 = orient.m32;
+    m31 = orient.m13; m32 = orient.m23; m33 = orient.m33;
 
+    // 平移部分
+    tx = pos.x; ty = pos.y; tz = pos.z;
 }
 
 inline void Matrix4x3::setupParentToLocal(const Vector3 &pos, const EulerAngles &orient)
 {
+    RotationMatrix orientMatrix;
+    orientMatrix.setup(orient);
 
+    setupParentToLocal(pos, orientMatrix);
 }
 
 inline void Matrix4x3::setupParentToLocal(const Vector3 &pos, const RotationMatrix &orient)
 {
+    // 旋转部分
+    m11 = orient.m11; m12 = orient.m12; m13 = orient.m13;
+    m21 = orient.m21; m22 = orient.m22; m23 = orient.m23;
+    m31 = orient.m31; m32 = orient.m32; m33 = orient.m33;
 
+    // 平移部分
+    // 一般来说，从世界空间到惯性空间只需要平移负的坐标量
+    // 但由于旋转时先发生的，所以现在需要旋转平移部分
+    // 这和先创建平移 -pos的矩阵T，在创建旋转矩阵R，再把他们连接成TR是一样的
+    tx = -(pos.x * m11 + pos.y * m21 + pos.z * m31);
+    ty = -(pos.x * m12 + pos.y * m22 + pos.z * m32);
+    tz = -(pos.x * m13 + pos.y * m23 + pos.z * m33);
 }
 
 // axis 1代表x轴，2代表y轴，3代表z轴
 inline void Matrix4x3::setupRotate(int axis, float theta)
 {
+    // 获取旋转角的sin和cos值
+    float s, c;
+    sinCos(&s, &c, theta);
 
+    // 判断旋转轴
+    switch ( axis )
+    {
+        case  1:
+        {
+            m11 = 1.0f; m12 = 0.0f; m13 = 0.0f;
+            m21 = 0.0f; m22 = c;    m23 = s;
+            m31 = 0.0f; m32 = -s;   m33 = c;
+        } break;
+
+        case 2:
+        {
+            m11 = c;    m12 = 0.0f; m13 = -s;
+            m21 = 0.0f; m22 = 1.0f; m23 = 0.0f;
+            m31 = s;    m32 = 0.0f; m33 = c;
+        } break;
+
+        case 3:
+        {
+            m11 = c;    m12 = s;    m13 = 0.0f;
+            m21 = -s;   m22 = c;    m23 = 0.0f;
+            m31 = 0.0f; m32 = 0.0f; m33 = 1.0f;
+        } break;
+
+        default:
+            assert(false);
+    }
+
+    tx = ty = tz = 0.0f;
 }
 
 inline void Matrix4x3::setupRotate(const Vector3 &axis, float theta)
 {
+    // 检查旋转轴是否为单位向量
+    assert(fabs(axis * axis - 1.0f) < 0.01);
 
+    // 取得旋转角的sin和cos值
+    float s, c;
+    sinCos(&s, &c, theta);
+
+    // 计算一些公用的表达式
+    float a = 1.0f - c;
+    float ax = a * axis.x;
+    float ay = a * axis.y;
+    float az = a * axis.z;
+
+    // 矩阵元素的赋值
+    m11 = ax * axis.x + c;
+    m12 = ax * axis.y + axis.z * s;
+    m13 = ax * axis.z - axis.y * s;
+
+    m21 = ay * axis.x - axis.z * s;
+    m22 = ay * axis.y + c;
+    m23 = ay * axis.z + axis.x * s;
+
+    m31 = az * axis.x + axis.y * s;
+    m32 = az * axis.y - axis.x * s;
+    m33 = az * axis.z + c;
+
+    // 平移部分
+    tx = ty = tz = 0.0f;
 }
 
 inline void Matrix4x3::fromQuaternion(const Quaternion &q)
