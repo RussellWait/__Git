@@ -46,13 +46,13 @@ public:
 	void setupShear(int axis, float s, float t);
 
 	// 构造投影矩阵，投影平面过原点
-	void setupProject(const Vector3 &v);
+	void setupProject(const Vector3 &n);
 
 	// 构造反射矩阵
 	void setupReflect(int axis, float k = 0.0f);
 
 	// 构造沿任意平面反射的矩阵
-	void setupReflect(const Vector3 &v);
+	void setupReflect(const Vector3 &n);
 
 
     // 公共属性

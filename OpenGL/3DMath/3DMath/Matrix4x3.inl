@@ -156,36 +156,116 @@ inline void Matrix4x3::setupRotate(const Vector3 &axis, float theta)
 
 inline void Matrix4x3::fromQuaternion(const Quaternion &q)
 {
+	// 计算一些公用的子表达式
+	float ww = 2.0f * q.w;
+	float xx = 2.0f * q.x;
+	float yy = 2.0f * q.y;
+	float zz = 2.0f * q.z;
 
+	// 矩阵元素的赋值
+	m11 = 1.0f - yy * q.y - zz * q.z;
+	m12 = xx * q.y + ww * q.z;
+	m13 = xx * q.z - ww * q.x;
+
+	m21 = xx * q.y - ww * q.z;
+	m22 = 1.0f - xx * q.x - zz * q.z;
+	m23 = yy * q.z + ww *q.x;
+
+	m31 = xx * q.z + ww * q.y;
+	m32 = yy * q.z - ww * q.x;
+	m33 = 1.0f - xx * q.x - yy * q.y;
+
+	// 平移部分
+	tx = ty = tz = 0.0f;
 }
 
 inline void Matrix4x3::setupScale(const Vector3 &s)
 {
+	m11 = s.x;	m12 = 0.0f;	m13 = 0.0f;
+	m21 = 0.0f; m22 = s.y;	m23 = 0.0f;
+	m31 = 0.0f; m32 = 0.0f; m33 = s.z;
 
+	tx = ty = tz = 0.0f;
 }
 
 // 沿任意方向缩放，这个缩放发生在一个穿过原点的平面上
 inline void Matrix4x3::setupScaleAlongAxis(const Vector3 &axis, float k)
 {
+	float a = k - 1.0f;
+	float ax = a * axis.x;
+	float ay = a * axis.y;
+	float az = a * axis.z;
 
+	m11 = ax * axis.x + 1.0f;
+	m22 = ay * axis.y + 1.0f;
+	m33 = az * axis.z + 1.0f;
+
+	m12 = m21 = ax * axis.y;
+	m13 = m31 = ax * axis.z;
+	m23 = m32 = ay * axis.z;
+
+	tx = ty = tz = 0.0f;
 }
 
 inline void Matrix4x3::setupShear(int axis, float s, float t)
 {
+	switch ( axis )
+	{
+		case 1:
+		{
+				  m11 = 1.0f; m12 = s; m13 = t;
+				  m21 = 0.0f; m22 = 1.0f; m23 = 0.0f;
+				  m31 = 0.0f; m32 = 0.0f; m33 = 1.0f;
+		} break;
 
+		case 2:
+		{
+				  m11 = 1.0f; m12 = 0.0f; m13 = 0.0f;
+				  m21 = s; m22 = 1.0f; m23 = t;
+				  m31 = 0.0f; m32 = 0.0f; m33 = 1.0f;
+		} break;
+
+		case 3:
+		{
+				  m11 = 1.0f; m12 = 0.0f; m13 = 0.0f;
+				  m21 = 0.0f; m22 = 1.0f; m23 = 0.0f;
+				  m31 = s; m32 = t; m33 = 1.0f;
+		} break;
+
+		default:
+			assert(false);
+	}
+
+	tx = ty = tz = 0.0f;
 }
 
-inline void Matrix4x3::setupProject(const Vector3 &v)
+inline void Matrix4x3::setupProject(const Vector3 &n)
 {
+	// 检查选择是否为单位向量
+	assert(fabs(n * n - 1.0f) < 0.01f);
 
+	m11 = 1.0f - n.x * n.x;
+	m22 = 1.0f - n.y * n.y;
+	m33 = 1.0f - n.z * n.z;
+
+	m12 = m21 = -n.x * n.y;
+	m13 = m31 = -n.x * n.z;
+	m23 = m32 = -n.y * n.z;
+
+	tx = ty = tz = 0.0f;
 }
 
 inline void Matrix4x3::setupReflect(int axis, float k /* = 0.0f */)
 {
+	switch ( axis )
+	{
 
+		default:
+			assert(false);
+	}
 }
 
-inline void Matrix4x3::setupReflect(const Vector3 &v)
+inline void Matrix4x3::setupReflect(const Vector3 &n)
 {
 
 }
