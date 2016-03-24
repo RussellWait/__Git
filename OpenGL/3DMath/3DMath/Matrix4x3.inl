@@ -26,9 +26,7 @@ inline void Matrix4x3::zeroTranslation()
 // 将矩阵平移部分设为指定值，不改变线性变换部分
 inline void Matrix4x3::setTranslation(const Vector3 &d)
 {
-    tx = d.x;
-    ty = d.y;
-    tz = d.z;
+    tx = d.x; ty = d.y; tz = d.z;
 }
 
 // 将矩阵平移部分设为指定值，线性变换部分设为单位矩阵
@@ -116,7 +114,9 @@ inline void Matrix4x3::setupRotate(int axis, float theta)
         } break;
 
         default:
+        {
             assert(false);
+        }
     }
 
     tx = ty = tz = 0.0f;
@@ -211,30 +211,32 @@ inline void Matrix4x3::setupShear(int axis, float s, float t)
 {
 	switch ( axis )
 	{
-		case 1:
-		{
-				  m11 = 1.0f; m12 = s; m13 = t;
-				  m21 = 0.0f; m22 = 1.0f; m23 = 0.0f;
-				  m31 = 0.0f; m32 = 0.0f; m33 = 1.0f;
-		} break;
+        case 1:
+        {
+            m11 = 1.0f; m12 = s;    m13 = t;
+            m21 = 0.0f; m22 = 1.0f; m23 = 0.0f;
+            m31 = 0.0f; m32 = 0.0f; m33 = 1.0f;
+        } break;
 
-		case 2:
-		{
-				  m11 = 1.0f; m12 = 0.0f; m13 = 0.0f;
-				  m21 = s; m22 = 1.0f; m23 = t;
-				  m31 = 0.0f; m32 = 0.0f; m33 = 1.0f;
-		} break;
+        case 2:
+        {
+            m11 = 1.0f; m12 = 0.0f; m13 = 0.0f;
+            m21 = s;    m22 = 1.0f; m23 = t;
+            m31 = 0.0f; m32 = 0.0f; m33 = 1.0f;
+        } break;
 
-		case 3:
-		{
-				  m11 = 1.0f; m12 = 0.0f; m13 = 0.0f;
-				  m21 = 0.0f; m22 = 1.0f; m23 = 0.0f;
-				  m31 = s; m32 = t; m33 = 1.0f;
-		} break;
+        case 3:
+        {
+            m11 = 1.0f; m12 = 0.0f; m13 = 0.0f;
+            m21 = 0.0f; m22 = 1.0f; m23 = 0.0f;
+            m31 = s;    m32 = t;    m33 = 1.0f;
+        } break;
 
-		default:
-			assert(false);
-	}
+        default:
+        {
+            assert(false);
+        }
+    }
 
 	tx = ty = tz = 0.0f;
 }
