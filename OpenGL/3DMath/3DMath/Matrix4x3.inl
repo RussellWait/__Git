@@ -261,60 +261,164 @@ inline void Matrix4x3::setupReflect(int axis, float k /* = 0.0f */)
 {
 	switch ( axis )
 	{
+		case 1:
+		{
+				  // 沿 x = k 平面反射
+				  m11 = -1.0f; m12 = 0.0f; m13 = 0.0f;
+				  m21 = 0.0f; m22 = 1.0f; m23 = 0.0f;
+				  m31 = 0.0f; m32 = 0.0f; m33 = 1.0f;
+
+				  tx = 2.0f * k;
+				  ty = 0.0f;
+				  tz = 0.0f;
+		} break;
+
+		case 2:
+		{
+				  // 沿 y = k 平面反射
+				  m11 = 1.0f; m12 = 0.0f; m13 = 0.0f;
+				  m21 = 0.0f; m22 = -1.0f; m23 = 0.0f;
+				  m31 = 0.0f; m32 = 0.0f; m33 = 1.0f;
+
+				  tx = 0.0f;
+				  ty = 2.0f * k;
+				  tz = 0.0f;
+		} break;
+
+		case 3:
+		{
+				  // 沿 z = k 平面反射
+				  m11 = 1.0f; m12 = 0.0f; m13 = 0.0f;
+				  m21 = 0.0f; m22 = 1.0f; m23 = 0.0f;
+				  m31 = 0.0f; m32 = 0.0f; m33 = -1.0f;
+
+				  tx = 0.0f;
+				  ty = 0.0f;
+				  tz = 2.0f * k;
+		} break;
 
 		default:
-			assert(false);
+		{
+				   assert(false);
+		}
 	}
 }
 
 inline void Matrix4x3::setupReflect(const Vector3 &n)
 {
+	// 检查旋转轴是否为单位向量
+	assert(fabs(n * n - 1.0f) < 0.01f);
 
+	float ax = -2.0f * n.x;
+	float ay = -2.0f * n.y;
+	float az = -2.0f * n.z;
+
+	m11 = 1.0f + ax * n.x;
+	m12 = 1.0f + ay * n.y;
+	m13 = 1.0f + az * n.z;
+
+	m12 = m21 = ax * n.y;
+	m13 = m31 = ax * n.z;
+	m23 = m32 = ay * n.z;
+
+	tx = ty = tz = 0.0f;
 }
 
 inline Vector3 operator *(const Vector3 &p, const Matrix4x3 &m)
 {
-
+	return Vector3(p.x * m.m11 + p.y * m.m21 + p.z * m.m31 + m.tx,
+				   p.x * m.m12 + p.y * m.m22 + p.z * m.m32 + m.ty,
+				   p.x * m.m13 + p.y * m.m23 + p.z * m.m33 + m.tz);
 }
 
 inline Matrix4x3 operator *(const Matrix4x3 &a, const Matrix4x3 &b)
 {
+	Matrix4x3 r;
+	
+	r.m11 = a.m11 * b.m11 + a.m12 * b.m21 + a.m13 * b.m31;
+	r.m12 = a.m11 * b.m12 + a.m12 * b.m22 + a.m13 * b.m32;
+	r.m13 = a.m11 * b.m13 + a.m12 * b.m23 + a.m13 * b.m33;
 
+	r.m21 = a.m21 * b.m11 + a.m22 * b.m21 + a.m23 * b.m31;
+	r.m22 = a.m21 * b.m12 + a.m22 * b.m22 + a.m23 * b.m32;
+	r.m23 = a.m21 * b.m13 + a.m22 * b.m23 + a.m23 * b.m33;
+
+	r.m31 = a.m31 * b.m11 + a.m32 * b.m21 + a.m33 * b.m31;
+	r.m32 = a.m31 * b.m12 + a.m32 * b.m22 + a.m33 * b.m32;
+	r.m33 = a.m31 * b.m13 + a.m32 * b.m23 + a.m33 * b.m33;
+
+	r.tx = a.tx * b.m11 + a.ty * b.m21 + a.tz * b.m31 + b.tx;
+	r.ty = a.tx * b.m12 + a.ty * b.m22 + a.tz * b.m32 + b.ty;
+	r.tz = a.tx * b.m13 + a.ty * b.m23 + a.tz * b.m33 + b.tz;
+
+	return r;
 }
 
 inline Vector3 &operator *=(Vector3 &p, const Matrix4x3 &m)
 {
-
+	p = p * m;
+	return p;
 }
 
-inline Matrix4x3 &operator *=(const Matrix4x3 &a, Matrix4x3 &b)
+inline Matrix4x3 &operator *=(Matrix4x3 &a, const Matrix4x3 &b)
 {
-
+	a = a * b;
+	return a;
 }
 
 // 计算矩阵行列式，默认最后一行为 [0.0f, 0.0f, 0.0f, 1.0f]的转置
 inline float determinant(const Matrix4x3 &m)
 {
+	float result =	m.m11 * (m.m22 * m.m33 - m.m23 * m.m32)
+		+ m.m12 * (m.m23 * m.m31 - m.m21 * m.m33)
+		+ m.m13 * (m.m21 + m.m32 - m.m22 * m.m31);
 
+	return result;
 }
 
 // 计算矩阵的逆，默认最后一列为 [0.0f, 0.0f, 0.0f, 1.0f]的转置
 inline Matrix4x3 inverse(const Matrix4x3 &m)
 {
+	// 如果矩阵为奇异的，则行列式为零，没有逆矩阵
+	float det = determinant(m);
+	assert(fabs(det) > 0.000001f);
 
+	float oneOverDet = 1.0f / det;
+
+	Matrix4x3 r;
+
+	r.m11 = (m.m22 * m.m33 - m.m23 * m.m32) * oneOverDet;
+	r.m12 = (m.m13 * m.m32 - m.m12 * m.m33) * oneOverDet;
+	r.m13 = (m.m12 * m.m23 - m.m13 * m.m22) * oneOverDet;
+
+	r.m21 = (m.m23 * m.m31 - m.m21 * m.m33) * oneOverDet;
+	r.m22 = (m.m11 * m.m33 - m.m13 * m.m31) * oneOverDet;
+	r.m23 = (m.m13 * m.m21 - m.m11 * m.m23) * oneOverDet;
+
+	r.m31 = (m.m21 * m.m32 - m.m22 * m.m31) * oneOverDet;
+	r.m32 = (m.m12 * m.m31 - m.m11 * m.m32) * oneOverDet;
+	r.m33 = (m.m11 * m.m22 - m.m12 * m.m21) * oneOverDet;
+
+	r.tx = -(m.tx * r.m11 + m.ty * r.m21 + m.tz * r.m31);
+	r.ty = -(m.tx * r.m12 + m.ty * r.m22 + m.tz * r.m32);
+	r.tz = -(m.tx * r.m13 + m.ty * r.m23 + m.tz * r.m33);
+
+	return r;
 }
 
 inline Vector3 getTranslation(const Matrix4x3 &m)
 {
-
+	return Vector3(m.tx, m.ty, m.tz);
 }
 
 inline Vector3 getPositionFromParentToLocalMatrix(const Matrix4x3 &m)
 {
-
+	return Vector3(-(m.tx * m.m11 + m.ty * m.m12 + m.tz * m.m13),
+				   -(m.tx * m.m21 + m.ty * m.m22 + m.tz * m.m23),
+				   -(m.tx * m.m31 + m.ty * m.m32 + m.tz * m.m33));
 }
 
 inline Vector3 getPositionFromLocalToParentMatrix(const Matrix4x3 &m)
 {
-
+	return Vector3(m.tx, m.ty, m.tz);
 }
