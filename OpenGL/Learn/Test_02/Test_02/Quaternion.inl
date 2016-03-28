@@ -1,4 +1,3 @@
-#include "Quaternion.h"
 #include <cmath>
 #include <memory.h>
 #include "Matrix.h"
@@ -36,8 +35,9 @@ inline CQuaternion SLERP(CQuaternion &rQuat0, CQuaternion &rQuat1, float fInterp
         return LERP(rQuat0, rQuat1, fInterp);
     }
 
-    CQuaternion ret;
     float fTheta = acosf(fDot);
+
+    CQuaternion ret;
     ret.m_fQuat[0] = (rQuat0.m_fQuat[0] * sinf(fTheta * (1 - fInterp)) + rQuat1.m_fQuat[0] * sinf(fTheta * fInterp)) / sinf(fTheta);
     ret.m_fQuat[1] = (rQuat0.m_fQuat[1] * sinf(fTheta * (1 - fInterp)) + rQuat1.m_fQuat[1] * sinf(fTheta * fInterp)) / sinf(fTheta);
     ret.m_fQuat[2] = (rQuat0.m_fQuat[2] * sinf(fTheta * (1 - fInterp)) + rQuat1.m_fQuat[2] * sinf(fTheta * fInterp)) / sinf(fTheta);

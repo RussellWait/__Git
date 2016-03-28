@@ -17,7 +17,6 @@ public:
     float *Get();
     void Set(float *fpVec);
 
-    void Transform3(const CMatrix3X3 &rMat);
 	void Transform3(const CMatrix4X4 &rMat);
 	void Transform4(const CMatrix4X4 &rMat);
 

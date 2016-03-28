@@ -24,6 +24,9 @@
     <ClCompile Include="LoadImage.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="MS3D.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="3D_Function.h">
@@ -35,13 +38,13 @@
     <ClInclude Include="Vector.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Matrix.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="Quaternion.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="MS3D.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Matrix.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

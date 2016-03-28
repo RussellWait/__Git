@@ -1,7 +1,9 @@
-#include "Matrix.h"
+#include <assert.h>
 #include "Vector.h"
 #include "Quaternion.h"
-#include <assert.h>
+
+
+#define SQU(x)  (x) * (x)
 
 
 /************************************************************************/
@@ -87,8 +89,8 @@ inline void CMatrix4X4::SetRotation(float fX, float fY, float fZ)
     m_fMat[2] = (float)(-sy);
 
     m_fMat[4] = (float)(sx * sy * cz - cx * sz);
-    m_fMat[5] = (float)(sx * sy * sz + sx * cz);
-    m_fMat[6] = (float)(cx * cy);
+    m_fMat[5] = (float)(sx * sy * sz + cx * cz);
+    m_fMat[6] = (float)(sx * cy);
 
     m_fMat[8] = (float)(cx * sy * cz + sx * sz);
     m_fMat[9] = (float)(cx * sy * sz - sx * cz);

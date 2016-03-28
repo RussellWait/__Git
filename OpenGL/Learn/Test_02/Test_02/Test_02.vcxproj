@@ -79,6 +79,7 @@
   <ItemGroup>
     <ClCompile Include="3D_Function.cpp" />
     <ClCompile Include="LoadImage.cpp" />
+    <ClCompile Include="MS3D.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -91,7 +92,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Matrix.inl" />
-    <None Include="Quaternion.inl" />
+    <None Include="Quaternion.inl">
+      <FileType>Document</FileType>
+    </None>
     <None Include="Vector.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
