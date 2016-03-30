@@ -94,6 +94,12 @@ bool CMS3D::Load(const char *szFileName)
     memcpy(m_pVertices, ucpPtr, m_usNumVerts * sizeof(SMS3DVertex));
     ucpPtr += m_usNumVerts * sizeof(SMS3DVertex);
 
+    m_usNumTriangles = *(unsigned short *)ucpPtr;
+    ucpPtr += 2;
+    m_pTriangles = new SMS3DTriangle[m_usNumTriangles];
+    memcpy(m_pTriangles, ucpPtr, m_usNumTriangles * sizeof(SMS3DTriangle));
+    ucpPtr += m_usNumTriangles * sizeof(SMS3DTriangle);
+
     m_usNumMeshes = *(unsigned short *)ucpPtr;
     ucpPtr += 2;
     m_pMeshes = new SMS3DMesh[m_usNumMeshes];
@@ -132,11 +138,11 @@ bool CMS3D::Load(const char *szFileName)
         memcpy(&m_pJoints[i], ucpPtr, 93);
         ucpPtr += 93;
         m_pJoints[i].m_RotKeyFrames = new SMS3DKeyFrame[m_pJoints[i].m_usNumRotFrames];
-        m_pJoints[i].m_TransKeyFrames = new SMS3DKeyFrame[m_pJoints[i].m_usNumRotFrames];
+        m_pJoints[i].m_TransKeyFrames = new SMS3DKeyFrame[m_pJoints[i].m_usNumTransFrames];
         memcpy(m_pJoints[i].m_RotKeyFrames, ucpPtr, m_pJoints[i].m_usNumRotFrames * sizeof(SMS3DKeyFrame));
         ucpPtr += m_pJoints[i].m_usNumRotFrames * sizeof(SMS3DKeyFrame);
-        memcpy(m_pJoints[i].m_TransKeyFrames, ucpPtr, m_pJoints[i].m_usNumRotFrames * sizeof(SMS3DKeyFrame));
-        ucpPtr += m_pJoints[i].m_usNumRotFrames * sizeof(SMS3DKeyFrame);
+        memcpy(m_pJoints[i].m_TransKeyFrames, ucpPtr, m_pJoints[i].m_usNumTransFrames * sizeof(SMS3DKeyFrame));
+        ucpPtr += m_pJoints[i].m_usNumTransFrames * sizeof(SMS3DKeyFrame);
     }
 
     for ( int i = 0; i < m_usNumJoints; i++ )
@@ -145,7 +151,7 @@ bool CMS3D::Load(const char *szFileName)
         {
             for ( int j = 0; j < m_usNumJoints; j++ )
             {
-                if ( 0 == strcmp(m_pJoints[j].m_cName, m_pJoints[i].m_cName) )
+                if ( 0 == strcmp(m_pJoints[j].m_cName, m_pJoints[i].m_cParent) )
                 {
                     m_pJoints[i].m_sParent = j;
                 }
@@ -204,7 +210,7 @@ void CMS3D::Animate(float fSpeed, float fStartTime, float fEndTime, bool bLoop)
             continue;
         }
 
-        while ( uiFrame < pJoint->m_usNumRotFrames && pJoint->m_TransKeyFrames[uiFrame].m_fTime < fTime )
+        while ( uiFrame < pJoint->m_usNumTransFrames && pJoint->m_TransKeyFrames[uiFrame].m_fTime < fTime )
         {
             uiFrame++;
         }
@@ -217,7 +223,7 @@ void CMS3D::Animate(float fSpeed, float fStartTime, float fEndTime, bool bLoop)
         {
             memcpy(fTranslation, pJoint->m_TransKeyFrames[0].m_fParam, sizeof(float[3]));
         }
-        else if ( uiFrame == pJoint->m_usNumRotFrames )
+        else if ( uiFrame == pJoint->m_usNumTransFrames )
         {
             memcpy(fTranslation, pJoint->m_TransKeyFrames[uiFrame - 1].m_fParam, sizeof(float[3]));
         }

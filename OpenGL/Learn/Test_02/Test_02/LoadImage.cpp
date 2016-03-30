@@ -6,7 +6,7 @@ BOOL CLoadImage::LoadBMP(char *szFileName)
     BOOL state = FALSE;
 
     AUX_RGBImageRec *textureImg[1];
-    memset(textureImg, 0, sizeof(AUX_RGBImageRec) * 1);
+    memset(textureImg, 0, sizeof(void *) * 1);
 
     if ( textureImg[0] = auxDIBImageLoad(szFileName) )
     {
