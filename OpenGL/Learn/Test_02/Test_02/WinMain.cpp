@@ -6,6 +6,7 @@
 #include <gl/GLU.H>
 #include <gl/GLAUX.H>
 #include "3D_Function.h"
+#include "MS3D.h"
 
 
 #define WND_CLASS_NAME      "Test"
@@ -20,6 +21,10 @@ BOOL                SetupPixelFormat(HDC hdc);
 
 
 HDC         main_hdc;
+HGLRC       main_hrc;
+
+
+CMS3D g_ms3d;
 
 
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nShowCmd)
@@ -104,11 +109,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             main_hdc = GetDC(hWnd);
             SetupPixelFormat(main_hdc);
 
-            HGLRC hrc = wglCreateContext(main_hdc);
-            wglMakeCurrent(main_hdc, hrc);
+            main_hrc = wglCreateContext(main_hdc);
+            wglMakeCurrent(main_hdc, main_hrc);
 
             InitOpenGL();
             SetupMatrices(WND_WIDTH, WND_HEIGHT);
+
+            g_ms3d.Load("thug jump.ms3d");
 
             SetTimer(hWnd, 1, 1, NULL);
 
@@ -125,6 +132,22 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
         case WM_DESTROY:
         {
+            if ( main_hdc )
+            {
+                wglMakeCurrent(main_hdc, NULL);     // 取消渲染环境
+            }
+
+            if ( main_hrc )
+            {
+                wglDeleteContext(main_hrc);         // 删除hrc指向的渲染环境
+            }
+
+            if ( hWnd )
+            {
+                DestroyWindow(hWnd);
+            }
+
+
             PostQuitMessage(0);
             return 0;
         } break;

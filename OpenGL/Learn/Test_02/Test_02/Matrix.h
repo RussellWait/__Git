@@ -1,6 +1,9 @@
 #pragma once
 
 
+#define SQU(x)  (x) * (x)
+
+
 class CMatrix3X3
 {
 public:

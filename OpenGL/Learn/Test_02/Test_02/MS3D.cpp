@@ -292,12 +292,12 @@ void CMS3D::SwapMeshDraw()
 
 bool CMS3D::AreBonesEnabled()
 {
-
+    return false;
 }
 
 bool CMS3D::AreMeshesEnabled()
 {
-
+    return false;
 }
 
 void CMS3D::Setup()
