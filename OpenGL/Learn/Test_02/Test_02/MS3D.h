@@ -35,7 +35,7 @@ struct SMS3DMesh
 
     SMS3DMesh()
     {
-        m_uspIndices = 0;
+        m_uspIndices = NULL;
     }
 
     ~SMS3DMesh()
@@ -93,8 +93,8 @@ struct SMS3DJoint
 
     SMS3DJoint()
     {
-        m_RotKeyFrames      = 0;
-        m_TransKeyFrames    = 0;
+        m_RotKeyFrames      = NULL;
+        m_TransKeyFrames    = NULL;
         m_usCurRotFrame     = 0;
         m_usCurTransFrame   = 0;
     }

@@ -98,7 +98,7 @@ bool CMS3D::Load(const char *szFileName)
     ucpPtr += 2;
     m_pMeshes = new SMS3DMesh[m_usNumMeshes];
     for ( int i = 0; i < m_usNumMeshes; i++ )
-    {
+	{
         memcpy(&m_pMeshes[i], ucpPtr, 35);
         ucpPtr += 35;
         m_pMeshes[i].m_uspIndices = new unsigned short[m_pMeshes[i].m_usNumTris];
