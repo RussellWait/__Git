@@ -14,17 +14,16 @@
 #define WND_HEIGHT          600
 
 
+HDC         main_hdc;
+HGLRC       main_hrc;
+
+CMS3D		g_ms3d;
+
+
 ATOM                MyRegisterClass(HINSTANCE hInstance);
 BOOL                InitInstance(HINSTANCE hInstance, int nShowCmd);
 LRESULT CALLBACK    WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 BOOL                SetupPixelFormat(HDC hdc);
-
-
-HDC         main_hdc;
-HGLRC       main_hrc;
-
-
-CMS3D g_ms3d;
 
 
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nShowCmd)

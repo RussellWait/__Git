@@ -14,4 +14,31 @@
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Matrix.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Quaternion.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Matrix.inl">
+      <Filter>源文件</Filter>
+    </None>
+    <None Include="Quaternion.inl">
+      <Filter>源文件</Filter>
+    </None>
+    <None Include="Vector.inl">
+      <Filter>源文件</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="WinMain.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
 </Project>
