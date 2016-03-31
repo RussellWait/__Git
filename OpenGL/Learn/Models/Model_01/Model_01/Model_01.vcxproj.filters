@@ -15,48 +15,28 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="WinMain.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="3D_Function.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="LoadImage.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="MS3D.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="3D_Function.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="LoadImage.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Vector.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Quaternion.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="MS3D.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Matrix.h">
+    <ClInclude Include="MD2.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Matrix.inl">
-      <Filter>头文件</Filter>
-    </None>
-    <None Include="Vector.inl">
-      <Filter>头文件</Filter>
-    </None>
-    <None Include="Quaternion.inl">
-      <Filter>头文件</Filter>
-    </None>
+    <ClCompile Include="3D_Function.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="LoadImage.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="MD2.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="WinMain.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

@@ -11,9 +11,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{0CF27FE9-D74A-4A5E-BD85-A278C03A70AA}</ProjectGuid>
+    <ProjectGuid>{49DFFEFC-CFE7-4504-8561-322BBC94BA73}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>Test_02</RootNamespace>
+    <RootNamespace>Model_01</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -77,25 +77,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="3D_Function.cpp" />
-    <ClCompile Include="LoadImage.cpp" />
-    <ClCompile Include="MS3D.cpp" />
-    <ClCompile Include="WinMain.cpp" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="3D_Function.h" />
     <ClInclude Include="LoadImage.h" />
-    <ClInclude Include="Matrix.h" />
-    <ClInclude Include="MS3D.h" />
-    <ClInclude Include="Quaternion.h" />
-    <ClInclude Include="Vector.h" />
+    <ClInclude Include="MD2.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Matrix.inl" />
-    <None Include="Quaternion.inl">
-      <FileType>Document</FileType>
-    </None>
-    <None Include="Vector.inl" />
+    <ClCompile Include="3D_Function.cpp" />
+    <ClCompile Include="LoadImage.cpp" />
+    <ClCompile Include="MD2.cpp" />
+    <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

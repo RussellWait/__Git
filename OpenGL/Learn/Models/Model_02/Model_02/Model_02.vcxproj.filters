@@ -14,29 +14,4 @@
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
   </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="WinMain.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="3D_Function.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="MD2.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="LoadImage.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="3D_Function.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="MD2.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="LoadImage.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-  </ItemGroup>
 </Project>
