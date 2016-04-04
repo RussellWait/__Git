@@ -24,6 +24,15 @@
     <ClInclude Include="Vector.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="3D_Function.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="LoadImage.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="MD3.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Matrix.inl">
@@ -38,6 +47,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="3D_Function.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="LoadImage.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="MD3.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

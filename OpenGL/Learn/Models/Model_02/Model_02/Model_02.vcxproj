@@ -77,7 +77,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="3D_Function.h" />
+    <ClInclude Include="LoadImage.h" />
     <ClInclude Include="Matrix.h" />
+    <ClInclude Include="MD3.h" />
     <ClInclude Include="Quaternion.h" />
     <ClInclude Include="Vector.h" />
   </ItemGroup>
@@ -87,6 +90,9 @@
     <None Include="Vector.inl" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="3D_Function.cpp" />
+    <ClCompile Include="LoadImage.cpp" />
+    <ClCompile Include="MD3.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

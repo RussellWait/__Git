@@ -99,12 +99,54 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch ( message )
 	{
+        case WM_CREATE:
+        {
+            main_hdc = GetDC(hwnd);
+            SetupPixelFormat(main_hdc);
+
+            main_hrc = wglCreateContext(main_hdc);
+            wglMakeCurrent(main_hdc, main_hrc);
+
+            
+
+            return 0;
+        } break;
+
+        case WM_TIMER:
+        {
+            return 0;
+        } break;
+
+        case WM_DESTROY:
+        {
+            PostQuitMessage(0);
+
+            return 0;
+        } break;
+
 		default:
 		break;
 	}
+
+    return DefWindowProc(hwnd, message, wParam, lParam);
 }
 
 BOOL SetupPixelFormat(HDC hdc)
 {
+    PIXELFORMATDESCRIPTOR pfd =
+    {
+        sizeof(PIXELFORMATDESCRIPTOR),
+        1.0f,
+        PFD_DRAW_TO_WINDOW | PFD_SUPPORT_OPENGL | PFD_DOUBLEBUFFER,
+        PFD_TYPE_RGBA,
+        32, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0,
+        32, 0, 0,
+        PFD_MAIN_PLANE,
+        0,
+        0, 0, 0
+    };
 
+    int pixelFormat = ChoosePixelFormat(hdc, &pfd);
+    return SetPixelFormat(hdc, pixelFormat, &pfd);
 }
