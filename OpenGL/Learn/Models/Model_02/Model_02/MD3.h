@@ -97,7 +97,7 @@ struct SMD3KeyFrame
         }
     }
 
-    SMD3KeyFrame    *m_pVertices;
+    SMD3Vertex	*m_pVertices;
 };
 
 // Õ¯∏Ò–≈œ¢
