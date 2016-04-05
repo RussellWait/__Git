@@ -152,7 +152,7 @@ bool CMD3::Load(const char *szFileName)
 			m_pMeshes[i].m_pSkins[j].m_Image.LoadBMP(m_pMeshes[i].m_pSkins[j].m_cName);
 		}
 
-		m_pMeshes->m_pKeyFrames = new SMD3KeyFrame[m_pMeshes[i].m_Header.m_iNumMeshFrames];
+		m_pMeshes[i].m_pKeyFrames = new SMD3KeyFrame[m_pMeshes[i].m_Header.m_iNumMeshFrames];
 
 		// 顶点存放的起始位置
 		ucpTmp2 = ucpTmp + m_pMeshes[i].m_Header.m_iVertexOffset;
@@ -355,7 +355,30 @@ void CMD3::Animate(unsigned int uiStartFrame, unsigned int uiEndFrame, int uiFPS
 
 	for ( int i = 0; i < iNumMeshes; i++ )
 	{
+        if ( !m_pMeshes[i].m_pInterp )
+        {
+            m_pMeshes[i].m_pInterp = new SMD3Vertex[m_pMeshes[i].m_Header.m_iNumVerts];
+        }
 
+        SMD3Vertex *pVertices = m_pMeshes[i].m_pInterp;
+
+        if ( uiStartFrame == uiEndFrame )
+        {
+            memcpy(m_pMeshes[i].m_pInterp, m_pMeshes[i].m_pKeyFrames[m_uiLastFrame].m_pVertices, sizeof(SMD3Vertex) * m_pMeshes[i].m_Header.m_iNumVerts);
+        }
+        else
+        {
+            SMD3KeyFrame *pLastFrame = &m_pMeshes[i].m_pKeyFrames[m_uiLastFrame];
+            SMD3KeyFrame *pNextFrame = &m_pMeshes[i].m_pKeyFrames[uiNextFrame];
+
+            int iNumVerts = m_pMeshes[i].m_Header.m_iNumVerts;
+            for ( int j = 0; j < iNumVerts; j++ )
+            {
+                pVertices[j].m_fVert[0] = pLastFrame->m_pVertices[j].m_fVert[0] + (pNextFrame->m_pVertices[j].m_fVert[0] - pLastFrame->m_pVertices[j].m_fVert[0]) * fInterp;
+                pVertices[j].m_fVert[1] = pLastFrame->m_pVertices[j].m_fVert[1] + (pNextFrame->m_pVertices[j].m_fVert[1] - pLastFrame->m_pVertices[j].m_fVert[1]) * fInterp;
+                pVertices[j].m_fVert[2] = pLastFrame->m_pVertices[j].m_fVert[2] + (pNextFrame->m_pVertices[j].m_fVert[2] - pLastFrame->m_pVertices[j].m_fVert[2]) * fInterp;
+            }
+        }
 	}
 }
 

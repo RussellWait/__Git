@@ -4,6 +4,12 @@
 #include <gl/GL.H>
 #include <gl/GLU.H>
 #include <gl/GLAUX.H>
+#include "MD3.h"
+
+
+extern CMD3 g_MD3_1;
+extern CMD3 g_MD3_2;
+extern CMD3 g_MD3_3;
 
 
 void InitOpenGL()
@@ -56,5 +62,11 @@ void Render()
     glTranslatef(0.0f, -5.0f, -90.0f);
     glRotatef(-90.0f, 1.0f, 0.0f, 0.0f);
 
-    
+    g_MD3_1.Animate(0, 200, 10);
+    g_MD3_2.Animate(0, 200, 10);
+    g_MD3_3.Animate(0, 200, 10);
+
+    g_MD3_1.Attach(&g_MD3_2, 0);
+    g_MD3_2.Attach(&g_MD3_3, 0);
+    g_MD3_1.RenderT();
 }

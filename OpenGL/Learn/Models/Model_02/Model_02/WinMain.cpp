@@ -5,6 +5,9 @@
 #include <gl/GLU.H>
 #include <gl/GLAUX.H>
 
+#include "3D_Function.h"
+#include "MD3.h"
+
 
 #define WND_CLASS_NAME	"Test"
 #define WND_WIDTH		800
@@ -13,6 +16,11 @@
 
 HDC		main_hdc;
 HGLRC	main_hrc;
+
+
+CMD3    g_MD3_1;
+CMD3    g_MD3_2;
+CMD3    g_MD3_3;
 
 
 ATOM				MyRegisterClass(HINSTANCE hInstance);
@@ -107,13 +115,23 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
             main_hrc = wglCreateContext(main_hdc);
             wglMakeCurrent(main_hdc, main_hrc);
 
-            
+            InitOpenGL();
+            SetupMatrices(WND_WIDTH, WND_HEIGHT);
+
+            g_MD3_1.Load("Models\\players\\doom\\lower.md3");
+            g_MD3_2.Load("Models\\players\\doom\\upper.md3");
+            g_MD3_3.Load("Models\\players\\doom\\head.md3");
+
+            SetTimer(hwnd, 1, 1, NULL);
 
             return 0;
         } break;
 
         case WM_TIMER:
         {
+            Render();
+            SwapBuffers(main_hdc);
+
             return 0;
         } break;
 
