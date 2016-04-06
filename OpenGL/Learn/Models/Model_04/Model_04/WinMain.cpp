@@ -4,6 +4,7 @@
 #include <gl/GL.H>
 #include <gl/GLU.H>
 #include <gl/GLAUX.H>
+#include "3D_Function.h"
 
 
 #define WND_CLASS_NAME	"Test"
@@ -17,7 +18,7 @@ HGLRC	main_hrc;
 
 ATOM				MyRegisterClass(HINSTANCE hInstance);
 BOOL				InitInstance(HINSTANCE hInstance, int nShowCmd);
-LRESULT CALLBACK	WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam);
+LRESULT CALLBACK	WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 BOOL				SetupPixelFormat(HDC hdc);
 
 
@@ -74,7 +75,7 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 
 BOOL InitInstance(HINSTANCE hInstance, int nShowCmd)
 {
-	HWND hwnd = CreateWindowEx(NULL,
+	HWND hWnd = CreateWindowEx(NULL,
 							   WND_CLASS_NAME,
 							   NULL,
 							   WS_OVERLAPPEDWINDOW,
@@ -84,41 +85,74 @@ BOOL InitInstance(HINSTANCE hInstance, int nShowCmd)
 							   hInstance,
 							   NULL);
 
-	if ( !hwnd )
+	if ( !hWnd )
 	{
 		return FALSE;
 	}
 
-	ShowWindow(hwnd, nShowCmd);
-	UpdateWindow(hwnd);
+	ShowWindow(hWnd, nShowCmd);
+	UpdateWindow(hWnd);
 
 	return TRUE;
 }
 
-LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch ( message )
 	{
 		case WM_CREATE:
 		{
+            main_hdc = GetDC(hWnd);
+            SetupPixelFormat(main_hdc);
 
+            main_hrc = wglGetCurrentContext();
+            wglMakeCurrent(main_hdc, main_hrc);
+
+            SetupPixelFormat(main_hdc);
+            InitOpenGL();
+
+            SetTimer(hWnd, 1, 1, NULL);
+
+            return 0;
 		} break;
 
 		case WM_TIMER:
 		{
+            Render();
+            SwapBuffers(main_hdc);
 
+            return 0;
 		} break;
 
-		case WM_DESTROY:
-		{
+        case WM_DESTROY:
+        {
+            if ( main_hdc )
+            {
+                // 取消渲染环境
+                wglMakeCurrent(main_hdc, NULL);
+            }
 
-		} break;
+            if ( main_hrc )
+            {
+                // 删除hrc指向的渲染
+                wglDeleteContext(main_hrc);
+            }
+
+            if ( hWnd )
+            {
+                DestroyWindow(hWnd);
+            }
+
+            PostQuitMessage(0);
+
+            return 0;
+        } break;
 
 		default:
 		break;
 	}
 
-	return DefWindowProc(hwnd, message, wParam, lParam);
+	return DefWindowProc(hWnd, message, wParam, lParam);
 }
 
 BOOL SetupPixelFormat(HDC hdc)
@@ -138,5 +172,5 @@ BOOL SetupPixelFormat(HDC hdc)
 	};
 
 	int pixelFormat = ChoosePixelFormat(hdc, &pfd);
-	SetPixelFormat(hdc, pixelFormat, &pfd);
+	return SetPixelFormat(hdc, pixelFormat, &pfd);
 }

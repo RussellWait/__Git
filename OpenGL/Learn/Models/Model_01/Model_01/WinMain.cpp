@@ -15,6 +15,8 @@
 
 
 HDC		    main_hdc;
+HGLRC       main_hrc;
+
 CMD2        g_MD2;
 CLoadImage  g_Skin;
 
@@ -108,8 +110,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             main_hdc = GetDC(hWnd);
             SetupPixcelFormat(main_hdc);
 
-            HGLRC hrc = wglCreateContext(main_hdc);
-            wglMakeCurrent(main_hdc, hrc);
+            main_hrc = wglCreateContext(main_hdc);
+            wglMakeCurrent(main_hdc, main_hrc);
 
             InitOpenGL();
             SetupMatrices(WND_HEIGHT, WND_HEIGHT);
@@ -133,7 +135,25 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
         case WM_DESTROY:
         {
+            if ( main_hdc )
+            {
+                // 取消渲染环境
+                wglMakeCurrent(main_hdc, NULL);
+            }
+
+            if ( main_hrc )
+            {
+                // 删除hrc指向的渲染
+                wglDeleteContext(main_hrc);
+            }
+
+            if ( hWnd )
+            {
+                DestroyWindow(hWnd);
+            }
+
             PostQuitMessage(0);
+
             return 0;
         } break;
 

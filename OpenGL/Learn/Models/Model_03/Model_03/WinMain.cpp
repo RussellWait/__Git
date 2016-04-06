@@ -133,12 +133,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         {
             if ( main_hdc )
             {
-                wglMakeCurrent(main_hdc, NULL);     // 取消渲染环境
+                // 取消渲染环境
+                wglMakeCurrent(main_hdc, NULL);
             }
 
             if ( main_hrc )
             {
-                wglDeleteContext(main_hrc);         // 删除hrc指向的渲染环境
+                // 删除hrc指向的渲染
+                wglDeleteContext(main_hrc);
             }
 
             if ( hWnd )
@@ -146,8 +148,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 DestroyWindow(hWnd);
             }
 
-
             PostQuitMessage(0);
+
             return 0;
         } break;
 
