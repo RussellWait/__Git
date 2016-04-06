@@ -71,15 +71,16 @@ bool CMD3::Load(const char *szFileName)
 	fread(ucpBuffer, 1, iFileSize, f);
 	fclose(f);
 
-	// 
 	m_Header = *(SMD3Header *)ucpTmp;
 	ucpTmp += sizeof(SMD3Header);
 
-
+	// 验证数据是否有效
 	if ( idP3 != m_Header.m_iID || versionP3 != m_Header.m_iVersion )
 	{
 		return false;
 	}
+
+	// 跳过框架数据
 	ucpTmp += m_Header.m_iNumFrame * 56;
 
 	// 为读取tag分配空间
@@ -114,7 +115,7 @@ bool CMD3::Load(const char *szFileName)
 		m_pTags[i].m_qRot.FromMatrix(tmp);
 	}
 
-	// 分贝存储网格的空间
+	// 存储网格的空间
 	m_pMeshes = new SMD3Mesh[m_Header.m_iNumMeshes];
 	unsigned char *ucpTmp2 = ucpTmp;
 	for ( int i = 0; i < m_Header.m_iNumMeshes; i++ )
