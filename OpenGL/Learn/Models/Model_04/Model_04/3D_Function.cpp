@@ -5,7 +5,10 @@
 #include <gl/GLU.H>
 #include <gl/GLAUX.H>
 
+#include "MD5.h"
 
+
+extern MD5_Model_t *md5File;
 float rotate_angle = 0.0f;
 
 
@@ -46,6 +49,6 @@ void Render()
     rotate_angle += 0.1f;
 
     glBegin(GL_LINE);
-        // ...
+		DrawModel(md5File);
     glEnd();
 }

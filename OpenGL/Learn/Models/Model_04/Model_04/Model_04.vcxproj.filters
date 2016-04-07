@@ -21,9 +21,15 @@
     <ClCompile Include="3D_Function.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="MD5.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="3D_Function.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="MD5.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

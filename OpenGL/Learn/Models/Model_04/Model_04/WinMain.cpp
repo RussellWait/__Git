@@ -1,10 +1,13 @@
 #define WIN32_LEAN_AND_MEAN
 
+#include <stdlib.h>
 #include <windows.h>
 #include <gl/GL.H>
 #include <gl/GLU.H>
 #include <gl/GLAUX.H>
+
 #include "3D_Function.h"
+#include "MD5.h"
 
 
 #define WND_CLASS_NAME	"Test"
@@ -14,6 +17,8 @@
 
 HDC		main_hdc;
 HGLRC	main_hrc;
+
+MD5_Model_t *md5File = NULL;	// 指向读取MD5模型信息的存储空间
 
 
 ATOM				MyRegisterClass(HINSTANCE hInstance);
@@ -111,6 +116,18 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             SetupPixelFormat(main_hdc);
             InitOpenGL();
 
+			md5File = (MD5_Model_t *)malloc(sizeof(MD5_Model_t));
+			memset(md5File, 0, sizeof(MD5_Model_t));
+
+			if ( !ReadModel("hellknight.md5mesh", md5File) )
+			{
+				exit(-1);
+			}
+			else
+			{
+				AllocVertexArrays();
+			}
+
             SetTimer(hWnd, 1, 1, NULL);
 
             return 0;
@@ -126,15 +143,18 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
         case WM_DESTROY:
         {
+			FreeModel(md5File);
+			FreeVertexArrays();
+
+			// 取消渲染环境
             if ( main_hdc )
             {
-                // 取消渲染环境
                 wglMakeCurrent(main_hdc, NULL);
             }
 
+			// 删除hrc指向的渲染
             if ( main_hrc )
             {
-                // 删除hrc指向的渲染
                 wglDeleteContext(main_hrc);
             }
 
