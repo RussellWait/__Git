@@ -8,8 +8,11 @@
 #include "MD5.h"
 
 
-extern MD5_Model_t *md5File;
+extern MD5_Model_t  *md5File;
+extern MD5_Anim_t   *md5anim;
+
 float rotate_angle = 0.0f;
+int index = 0;
 
 
 void InitOpenGL()
@@ -45,10 +48,23 @@ void Render()
     glTranslatef(0.0f, -55.0f, -250.0f);
     
     glRotatef(-60.0f, 1.0f, 0.0f, 0.0f);
-    glRotatef(rotate_angle, 0.0f, 0.0f, 1.0f);
-    rotate_angle += 0.1f;
+    glRotatef(-60.0f, 0.0f, 0.0f, 1.0f);
+    //glRotatef(rotate_angle, 0.0f, 0.0f, 1.0f);
 
     glBegin(GL_LINES);
-		DrawModel(md5File);
+		//DrawModel(md5File);
+        DrawAnim(md5File, md5anim, index);
     glEnd();
+
+
+    rotate_angle += 0.1f;
+
+    if ( index < md5anim->num_frames - 1 )
+    {
+        index++;
+    }
+    else
+    {
+        index = 0;
+    }
 }

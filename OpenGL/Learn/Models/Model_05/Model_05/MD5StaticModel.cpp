@@ -18,75 +18,6 @@ Vec3_t *vertexArray = NULL;
 GLuint *vertexIndices = NULL;
 
 
-// 计算四元数的W
-void Quat_computeW(Quat4_t q)
-{
-    float t = 1.0f - (q[X] * q[X]) - (q[Y] * q[Y]) - (q[Z] * q[Z]);
-
-    if (t < 0.0f)
-    {
-        q[W] = 0.0f;
-    }
-    else
-    {
-        q[W] = -sqrt(t);
-    }
-}
-
-// 四元数标准化
-void Quat_normalize(Quat4_t q)
-{
-    float mag = sqrt((q[X] * q[X]) + (q[Y] * q[Y]) + (q[Z] * q[Z]) + (q[W] * q[W]));
-
-    if ( mag > 0.0f )
-    {
-        float oneOverMag = 1.0f / mag;
-
-        q[W] *= oneOverMag;
-        q[X] *= oneOverMag;
-        q[Y] *= oneOverMag;
-        q[Z] *= oneOverMag;
-    }
-}
-
-// 四元数乘法
-void Quat_multQuat(const Quat4_t q1, const Quat4_t q2, Quat4_t out)
-{
-    out[W] = (q1[W] * q2[W]) - (q1[X] * q2[X]) - (q1[Y] * q2[Y]) - (q1[Z] * q2[Z]);
-    out[X] = (q1[X] * q2[W]) + (q1[W] * q2[X]) + (q1[Y] * q2[Z]) - (q1[Z] * q2[Y]);
-    out[Y] = (q1[Y] * q2[W]) + (q1[W] * q2[Y]) + (q1[Z] * q2[X]) - (q1[X] * q2[Z]);
-    out[Z] = (q1[Z] * q2[W]) + (q1[W] * q2[Z]) + (q1[X] * q2[Y]) - (q1[Y] * q2[X]);
-}
-
-void Quat_multVec(const Quat4_t q, const Vec3_t v, Quat4_t out)
-{
-    out[W] = -(q[X] * v[X]) - (q[Y] * v[Y]) - (q[Z] * v[Z]);
-    out[X] =  (q[W] * v[X]) + (q[Y] * v[Z]) - (q[Z] * v[Y]);
-    out[Y] =  (q[W] * v[Y]) + (q[Z] * v[X]) - (q[X] * v[Z]);
-    out[Z] =  (q[W] * v[Z]) + (q[X] * q[Y]) - (q[Y] * v[X]);
-}
-
-// 向量绕四元数旋转
-void Quat_rotatePoint(const Quat4_t q, const Vec3_t in, Vec3_t out)
-{
-    Quat4_t tmp, inv, final;
-
-    inv[X] = -q[X];
-    inv[Y] = -q[Y];
-    inv[Z] = -q[Z];
-    inv[W] =  q[W];
-
-    Quat_normalize(inv);
-
-    Quat_multVec(q, in, tmp);
-    Quat_multQuat(tmp, inv, final);
-
-    out[X] = final[X];
-    out[Y] = final[Y];
-    out[Z] = final[Z];
-}
-
-
 int ReadModel(const char *fileName, MD5_Model_t *mdl)
 {
     FILE *fp;
@@ -139,9 +70,9 @@ int ReadModel(const char *fileName, MD5_Model_t *mdl)
                 MD5_Joint_t *joint = &mdl->baseSkel[i];
                 fgets(buff, sizeof(buff), fp);
                 if ( 8 == sscanf(buff, "%s %d ( %f %f %f ) ( %f %f %f )",
-                    joint->name, &joint->parent,
-                    &joint->pos[X], &joint->pos[Y], &joint->pos[Z],
-                    &joint->orient[X], &joint->orient[Y], &joint->orient[Z]) )
+                                joint->name, &joint->parent,
+                                &joint->pos[X], &joint->pos[Y], &joint->pos[Z],
+                                &joint->orient[X], &joint->orient[Y], &joint->orient[Z]) )
                 {
                     Quat_computeW(joint->orient);
                 }
@@ -197,9 +128,9 @@ int ReadModel(const char *fileName, MD5_Model_t *mdl)
                 }
                 // 读取顶点到上面分配的存储空间中
                 else if ( 5 == sscanf(buff, " vert %d ( %f %f ) %d %d",
-                    &vert_index,
-                    &fdata[X], &fdata[Y],
-                    &idata[X], &idata[Y]) )
+                                        &vert_index, 
+                                        &fdata[X], &fdata[Y],
+                                        &idata[X], &idata[Y]) )
                 {
                     mesh->vertices[vert_index].st[X] = fdata[X];
                     mesh->vertices[vert_index].st[Y] = fdata[Y];
@@ -221,8 +152,8 @@ int ReadModel(const char *fileName, MD5_Model_t *mdl)
                 }
                 // 读取三角形信息到上面分配的存储空间中，该信息是三角形用到的顶点在顶点存储空间中的下标索引
                 else if ( 4 == sscanf(buff, " tri %d %d %d %d",
-                    &tri_index,
-                    &idata[X], &idata[Y], &idata[Z]) )
+                                        &tri_index,
+                                        &idata[X], &idata[Y], &idata[Z]) )
                 {
                     mesh->triangles[tri_index].index[X] = idata[X];
                     mesh->triangles[tri_index].index[Y] = idata[Y];
@@ -236,8 +167,8 @@ int ReadModel(const char *fileName, MD5_Model_t *mdl)
                     }
                 }
                 else if ( 6 == sscanf(buff, " weight %d %d %f ( %f %f %f )",
-                    &weight_index, &idata[X], &fdata[W],
-                    &fdata[X], &fdata[Y], &fdata[Z]) )
+                                        &weight_index, &idata[X], &fdata[W],
+                                        &fdata[X], &fdata[Y], &fdata[Z]) )
                 {
                     mesh->weights[weight_index].joint   = idata[X];
                     mesh->weights[weight_index].bias    = fdata[W];
@@ -342,9 +273,9 @@ void PremareMesh(const MD5_Mesh_t *mesh, const MD5_Joint_t *joints)
             Quat_rotatePoint(joint->orient, weight->pos, wv);
 
             // the sum of all weight->bias should be 1.0
-            finalVertex[X] += (joint->pos[X] + wv[X]) * weight->bias;
-            finalVertex[Y] += (joint->pos[Y] + wv[Y]) * weight->bias;
-            finalVertex[Z] += (joint->pos[Z] + wv[Z]) * weight->bias;
+             finalVertex[X] += (joint->pos[X] + wv[X]) * weight->bias;
+             finalVertex[Y] += (joint->pos[Y] + wv[Y]) * weight->bias;
+             finalVertex[Z] += (joint->pos[Z] + wv[Z]) * weight->bias;
         }
 
         vertexArray[i][X] = finalVertex[X];
@@ -361,13 +292,13 @@ void AllocVertexArrays()
 
 void FreeVertexArrays()
 {
-    if ( vertexArray )
+    if (vertexArray)
     {
         free(vertexArray);
         vertexArray = NULL;
     }
 
-    if ( vertexIndices )
+    if (vertexIndices)
     {
         free(vertexIndices);
         vertexIndices = NULL;
