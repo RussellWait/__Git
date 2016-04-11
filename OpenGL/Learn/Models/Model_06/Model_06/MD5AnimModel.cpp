@@ -29,37 +29,37 @@ static void BuildFrameSkeleton(const Joint_Info_t *jointInfos,      // 接收hiera
         memcpy(animatedPos, baseJoint->pos, sizeof(Vec3_t));
         memcpy(animatedOrient, baseJoint->orient, sizeof(Quat4_t));
 
-        if ( jointInfos[i].flags & 1 )
+        if ( jointInfos[i].flags & 1 )      // Tx
         {
             animatedPos[X] = animFrameData[jointInfos[i].startIndex + j];
             j++;
         }
 
-        if ( jointInfos[i].flags & 2 )
+        if ( jointInfos[i].flags & 2 )      // Ty
         {
             animatedPos[Y] = animFrameData[jointInfos[i].startIndex + j];
             j++;
         }
 
-        if ( jointInfos[i].flags & 4 )
+        if ( jointInfos[i].flags & 4 )      // Tz
         {
             animatedPos[Z] = animFrameData[jointInfos[i].startIndex + j];
             j++;
         }
 
-        if ( jointInfos[i].flags & 8 )
+        if ( jointInfos[i].flags & 8 )      // Qx
         {
             animatedOrient[X] = animFrameData[jointInfos[i].startIndex + j];
             j++;
         }
 
-        if ( jointInfos[i].flags & 16 )
+        if ( jointInfos[i].flags & 16 )     // Qy
         {
             animatedOrient[Y] = animFrameData[jointInfos[i].startIndex + j];
             j++;
         }
 
-        if ( jointInfos[i].flags & 32 )
+        if ( jointInfos[i].flags & 32 )     // Qz
         {
             animatedOrient[Z] = animFrameData[jointInfos[i].startIndex + j];
             j++;
@@ -92,6 +92,7 @@ static void BuildFrameSkeleton(const Joint_Info_t *jointInfos,      // 接收hiera
             thisJoint->pos[1] = rPos[Y] + parentJoint->pos[Y];
             thisJoint->pos[2] = rPos[Z] + parentJoint->pos[Z];
 
+            // concatenate rotations
             Quat_multQuat(parentJoint->orient, animatedOrient, thisJoint->orient);
             Quat_normalize(thisJoint->orient);
         }
@@ -104,7 +105,7 @@ int ReadAnim(const char *fileName, MD5_Anim_t *anim)
     char                buff[512];
     Joint_Info_t        *jointInfos     = NULL;
     BaseFrame_Joint_t   *baseFrame      = NULL;
-    float               *animFrameData  = NULL;
+    float               *animFrameData  = NULL; // 临时存放Frame n 数据块中的信息
 
     // 临时存放
     int version;
@@ -120,15 +121,18 @@ int ReadAnim(const char *fileName, MD5_Anim_t *anim)
 
     while ( !feof(fp) )
     {
+        // read whole line
         fgets(buff, sizeof(buff), fp);
         if ( 1 == sscanf(buff, " MD5Version %d", &version) )
         {
             if ( 10 != version )
             {
+                // bad version
                 fclose(fp);
                 return FALSE;
             }
         }
+        // 读取框架数量，并分配存储骨骼框架与包围盒信息的空间
         else if ( 1 == sscanf(buff, " numFrames %d", &anim->num_frames) )
         {
             if ( anim->num_frames > 0 )
@@ -137,23 +141,28 @@ int ReadAnim(const char *fileName, MD5_Anim_t *anim)
                 anim->bboxes = (MD5_BBox_t *)malloc(sizeof(MD5_BBox_t) * anim->num_frames);
             }
         }
+        // 读取骨骼的数量，并分配骨骼框架中存放骨骼信息的空间
         else if ( 1 == sscanf(buff, " numJoints %d", &anim->num_joints) )
         {
             if ( anim->num_joints > 0 )
             {
                 for ( int i = 0; i < anim->num_frames; i++ )
                 {
+                    // 分配空间
                     anim->skelFrames[i] = (MD5_Joint_t *)malloc(sizeof(MD5_Joint_t) * anim->num_joints);
                 }
-
+                // 临时存放hierarchy中信息，这些信息在骨骼框架建立后不再需要
                 jointInfos = (Joint_Info_t *)malloc(sizeof(Joint_Info_t) * anim->num_joints);
+                // 基础骨骼框架的信息
                 baseFrame = (BaseFrame_Joint_t *)malloc(sizeof(BaseFrame_Joint_t) * anim->num_joints);
             }
         }
+        // 读取框架的帧速度
         else if ( 1 == sscanf(buff, " frameRate %d", &anim->frameRate) )
         {
             // ...
         }
+        // 读取动画组件参数的数量并分配存储空间
         else if ( 1 == sscanf(buff, " numAnimatedComponents %d", &numAnimatedConponents) )
         {
             if ( numAnimatedConponents > 0 )
@@ -161,11 +170,14 @@ int ReadAnim(const char *fileName, MD5_Anim_t *anim)
                 animFrameData = (float *)malloc(sizeof(float) * numAnimatedConponents);
             }
         }
+        // 读取hierarchy数据块中的信息
         else if ( 0 == strncmp(buff, "hierarchy {", 11) )
         {
             for ( int i = 0; i < anim->num_joints; i++ )
             {
+                // read whole line
                 fgets(buff, sizeof(buff), fp);
+                // read joint info
                 sscanf(buff, "%s %d %d %d",
                        jointInfos[i].name,
                        &jointInfos[i].parent,
@@ -177,32 +189,40 @@ int ReadAnim(const char *fileName, MD5_Anim_t *anim)
         {
             for ( int i = 0; i < anim->num_frames; i++ )
             {
+                // read whole line
                 fgets(buff, sizeof(buff), fp);
+                // read bounding box
                 sscanf(buff, " ( %f %f %f ) ( %f %f %f )",
                        &anim->bboxes[i].min[X], &anim->bboxes[i].min[Y], &anim->bboxes[i].min[Z],
                        &anim->bboxes[i].max[X], &anim->bboxes[i].max[Y], &anim->bboxes[i].max[Z]);
             }
         }
+        // 读取基础框架数据块的数据
         else if ( 0 == strncmp(buff, "baseframe {", 10) )
         {
             for ( int i = 0; i < anim->num_joints; i++ )
             {
+                // read whole line
                 fgets(buff, sizeof(buff), fp);
+                // read base frame joint
                 if ( 6 == sscanf(buff, " (%f %f %f ) ( %f %f %f )",
                                     &baseFrame[i].pos[X], &baseFrame[i].pos[Y], &baseFrame[i].pos[Z],
                                     &baseFrame[i].orient[X], &baseFrame[i].orient[Y], &baseFrame[i].orient[Z]) )
                 {
+                    // compute the w component
                     Quat_computeW(baseFrame[i].orient);
                 }
             }
         }
+        // 读取动画框架数据块中的信息并建立每一个动画帧的骨骼矿机数据与骨骼之间的联系
         else if ( 1 == sscanf(buff, " frame %d", &frame_index) )
         {
+            // read frame data
             for ( int i = 0; i < numAnimatedConponents; i++ )
             {
                 fscanf(fp, "%f", &animFrameData[i]);
             }
-
+            // build frame skeleton from the collected data
             BuildFrameSkeleton(jointInfos, baseFrame, animFrameData,
                                anim->skelFrames[frame_index], anim->num_joints);
         }
@@ -210,6 +230,7 @@ int ReadAnim(const char *fileName, MD5_Anim_t *anim)
 
     fclose(fp);
 
+    // free temporary allocated data
     if ( animFrameData )
     {
         free(animFrameData);
