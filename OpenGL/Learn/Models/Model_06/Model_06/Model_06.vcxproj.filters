@@ -21,6 +21,9 @@
     <ClInclude Include="MD5.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="LoadImage.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="3D_Function.cpp">
@@ -36,6 +39,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="WinMain.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="LoadImage.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

@@ -42,6 +42,9 @@ void SetupMatrices(int w, int h)
 
 void Render()
 {
+	// 用户自定义的绘制过程
+	// ...
+
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
 

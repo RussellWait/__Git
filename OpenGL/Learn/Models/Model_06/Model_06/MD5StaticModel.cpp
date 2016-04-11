@@ -4,10 +4,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include <windows.h>
-#include <gl/GL.H>
-#include <gl/GLU.H>
-#include <gl/GLAUX.H>
+
+#include "LoadImage.h"
 
 
 // vertex array related suff
@@ -112,6 +110,11 @@ int ReadModel(const char *fileName, MD5_Model_t *mdl)
                             j++;
                         }
                     }
+
+					// 得到纹理的路径与文件名节后后字符串，那么就可以开始读取，
+					// 读取后的纹理存储于网格结构中的textur中
+					strcat(mesh->shader, ".tga");
+					Load(mesh->shader, &mesh->textures_h);
                 }
                 // 读取顶点数量并分配存储空间
                 else if ( 1 == sscanf(buff, " numverts %d", &mesh->num_verts) )

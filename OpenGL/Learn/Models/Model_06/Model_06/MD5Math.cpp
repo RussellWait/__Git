@@ -1,10 +1,6 @@
 #include "MD5.h"
 
 #include <math.h>
-#include <windows.h>
-#include <gl/GL.H>
-#include <gl/GLU.H>
-#include <gl/GLAUX.H>
 
 
 // 计算四元数的W

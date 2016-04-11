@@ -122,7 +122,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			md5File = (MD5_Model_t *)malloc(sizeof(MD5_Model_t));
 			memset(md5File, 0, sizeof(MD5_Model_t));
 
-			if ( !ReadModel("model/hellknight.md5mesh", md5File) )
+			if ( !ReadModel("models/hellknight.md5mesh", md5File) )
 			{
 				exit(-1);
 			}
@@ -134,7 +134,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             md5anim = (MD5_Anim_t *)malloc(sizeof(MD5_Anim_t));
             memset(md5anim, 0, sizeof(MD5_Anim_t));
 
-            if ( !ReadAnim("model/turret_attack.md5anim", md5anim) )
+            if ( !ReadAnim("models/turret_attack.md5anim", md5anim) )
             {
                 if ( md5anim )
                 {

@@ -1,5 +1,11 @@
 #pragma once
 
+#include <windows.h>
+#include <gl/GL.H>
+#include <gl/GLU.H>
+#include <gl/GLAUX.H>
+
+
 enum
 {
 	X, Y, Z, W
@@ -65,6 +71,7 @@ typedef struct
 	int				num_weights;
 
 	char			shader[256];
+	GLuint			textures_h;		// 纹理指向该网络的纹理句柄
 } MD5_Mesh_t;
 
 // MD5 model structure

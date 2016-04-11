@@ -3,10 +3,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include <windows.h>
-#include <gl/GL.H>
-#include <gl/GLU.H>
-#include <gl/GLAUX.H>
 
 
 extern Vec3_t *vertexArray;

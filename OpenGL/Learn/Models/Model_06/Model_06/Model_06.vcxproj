@@ -78,10 +78,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="3D_Function.h" />
+    <ClInclude Include="LoadImage.h" />
     <ClInclude Include="MD5.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="3D_Function.cpp" />
+    <ClCompile Include="LoadImage.cpp" />
     <ClCompile Include="MD5AnimModel.cpp" />
     <ClCompile Include="MD5Math.cpp" />
     <ClCompile Include="MD5StaticModel.cpp" />
