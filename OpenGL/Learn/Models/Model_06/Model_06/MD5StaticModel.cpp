@@ -13,6 +13,7 @@ int max_verts = 0;
 int max_tris = 0;
 
 Vec3_t *vertexArray = NULL;
+Vec2_t *textureArray = NULL;
 GLuint *vertexIndices = NULL;
 
 
@@ -284,24 +285,34 @@ void PremareMesh(const MD5_Mesh_t *mesh, const MD5_Joint_t *joints)
         vertexArray[i][X] = finalVertex[X];
         vertexArray[i][Y] = finalVertex[Y];
         vertexArray[i][Z] = finalVertex[Z];
+
+        textureArray[i][0] = mesh->vertices[i].st[0];
+        textureArray[i][1] = 1 - mesh->vertices[i].st[1];
     }
 }
 
 void AllocVertexArrays()
 {
     vertexArray = (Vec3_t *)malloc(sizeof(Vec3_t) * max_verts);
+    textureArray = (Vec2_t *)malloc(sizeof(GLuint) * max_verts);
     vertexIndices = (GLuint *)malloc(sizeof(GLuint) * max_tris * 3);
 }
 
 void FreeVertexArrays()
 {
-    if (vertexArray)
+    if ( vertexArray )
     {
         free(vertexArray);
         vertexArray = NULL;
     }
 
-    if (vertexIndices)
+    if ( textureArray )
+    {
+        free(textureArray);
+        textureArray = NULL;
+    }
+
+    if ( vertexIndices )
     {
         free(vertexIndices);
         vertexIndices = NULL;

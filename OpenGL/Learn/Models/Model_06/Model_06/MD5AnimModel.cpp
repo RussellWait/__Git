@@ -6,6 +6,7 @@
 
 
 extern Vec3_t *vertexArray;
+extern Vec2_t *textureArray;
 extern GLuint *vertexIndices;
 
 
@@ -247,21 +248,32 @@ int ReadAnim(const char *fileName, MD5_Anim_t *anim)
 
 void DrawAnim(MD5_Model_t *mdl, MD5_Anim_t *anim, int skelFrames_index)
 {
-    glColor3f(1.0f, 1.0f, 1.0f);
-
     int vertex_index;
     for ( int i = 0; i < mdl->num_meshes; i++ )
     {
+        if ( 1 == i || 2 == i )
+        {
+            continue;
+        }
+
         PremareMesh(&mdl->meshes[i], anim->skelFrames[skelFrames_index]);
 
-        for ( int j = 0; j < mdl->meshes[i].num_tris; j++ )
-        {
-            for ( int k = 0; k < 3; k++ )
-            {
-                vertex_index = mdl->meshes[i].triangles[j].index[k];
-                glVertex3f(vertexArray[vertex_index][X], vertexArray[vertex_index][Y], vertexArray[vertex_index][Z]);
-            }
-        }
+        glBindTexture(GL_TEXTURE_2D, mdl->meshes[i].textures_h);
+
+        // 初始化顶点与纹理数组
+        glVertexPointer(3, GL_FLOAT, 0, vertexArray);
+        glTexCoordPointer(2, GL_FLOAT, 0, textureArray);
+
+        // 打开顶点与纹理数组功能
+        glEnableClientState(GL_VERTEX_ARRAY);
+        glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
+        // 绘画顶点数组中的内容
+        glDrawElements(GL_TRIANGLES, mdl->meshes[i].num_tris * 3, GL_UNSIGNED_INT, vertexIndices);
+
+        // 关闭顶点与纹理数组功能
+        glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+        glDisableClientState(GL_VERTEX_ARRAY);
     }
 }
 
