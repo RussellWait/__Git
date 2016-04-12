@@ -134,7 +134,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             md5Anim = (MD5_Anim_t *)malloc(sizeof(MD5_Anim_t));
             memset(md5Anim, 0, sizeof(MD5_Anim_t));
 
-            if ( !ReadAnim("models/turret_attack.md5anim", md5Anim) )
+            if ( !ReadAnim("models/stand.md5anim", md5Anim) )
+            //if ( !ReadAnim("models/turret_attack.md5anim", md5Anim) )
             {
                 if ( md5Anim )
                 {

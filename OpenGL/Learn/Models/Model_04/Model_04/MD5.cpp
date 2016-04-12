@@ -63,7 +63,7 @@ void Quat_multVec(const Quat4_t q, const Vec3_t v, Quat4_t out)
     out[W] = -(q[X] * v[X]) - (q[Y] * v[Y]) - (q[Z] * v[Z]);
     out[X] =  (q[W] * v[X]) + (q[Y] * v[Z]) - (q[Z] * v[Y]);
     out[Y] =  (q[W] * v[Y]) + (q[Z] * v[X]) - (q[X] * v[Z]);
-    out[Z] =  (q[W] * v[Z]) + (q[X] * q[Y]) - (q[Y] * v[X]);
+    out[Z] =  (q[W] * v[Z]) + (q[X] * v[Y]) - (q[Y] * v[X]);
 }
 
 // 向量绕四元数旋转

@@ -121,7 +121,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			md5File = (MD5_Model_t *)malloc(sizeof(MD5_Model_t));
 			memset(md5File, 0, sizeof(MD5_Model_t));
 
-			if ( !ReadModel("model/hellknight.md5mesh", md5File) )
+			if ( !ReadModel("models/hellknight.md5mesh", md5File) )
 			{
 				exit(-1);
 			}

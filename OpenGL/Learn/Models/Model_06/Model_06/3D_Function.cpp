@@ -89,10 +89,10 @@ void Render()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
 
-    glTranslatef(0.0f, -45.0f, -250.0f);
+    glTranslatef(0.0f, -55.0f, -250.0f);
     
     glRotatef(-60.0f, 1.0f, 0.0f, 0.0f);
-    glRotatef(-10.0f, 0.0f, 0.0f, 1.0f);
+    glRotatef(-60.0f, 0.0f, 0.0f, 1.0f);
     glRotatef(rotate_angle, 0.0f, 0.0f, 1.0f);
 
 	DrawAnim(md5File, md5Anim, index);

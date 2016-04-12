@@ -194,7 +194,7 @@ void DrawModel(const MD5_Model_t *mdl)
 
     for ( int i = 0; i < mdl->num_meshes; i++ )
     {
-        PremareMesh(&mdl->meshes[i], mdl->baseSkel);
+        PrepareMesh(&mdl->meshes[i], mdl->baseSkel);
 
         for ( int j = 0; j < mdl->meshes[i].num_tris; j++ )
         {
@@ -244,7 +244,7 @@ void FreeModel(MD5_Model_t *mdl)
 }
 
 // ∆•≈‰Õ¯∏Ò
-void PremareMesh(const MD5_Mesh_t *mesh, const MD5_Joint_t *joints)
+void PrepareMesh(const MD5_Mesh_t *mesh, const MD5_Joint_t *joints)
 {
     int i, j, k;
 

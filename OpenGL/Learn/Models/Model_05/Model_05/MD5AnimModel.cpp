@@ -256,7 +256,7 @@ void DrawAnim(MD5_Model_t *mdl, MD5_Anim_t *anim, int skelFrames_index)
     int vertex_index;
     for ( int i = 0; i < mdl->num_meshes; i++ )
     {
-        PremareMesh(&mdl->meshes[i], anim->skelFrames[skelFrames_index]);
+        PrepareMesh(&mdl->meshes[i], anim->skelFrames[skelFrames_index]);
 
         for ( int j = 0; j < mdl->meshes[i].num_tris; j++ )
         {

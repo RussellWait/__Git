@@ -126,7 +126,7 @@ void Quat_rotatePoint(const Quat4_t q, const Vec3_t in, Vec3_t out);
 int ReadModel(const char *fileName, MD5_Model_t *mdl);
 void DrawModel(const MD5_Model_t *mdl);
 void FreeModel(MD5_Model_t *mdl);
-void PremareMesh(const MD5_Mesh_t *mesh, const MD5_Joint_t *joints);
+void PrepareMesh(const MD5_Mesh_t *mesh, const MD5_Joint_t *joints);
 void AllocVertexArrays(void);
 void FreeVertexArrays(void);
 
