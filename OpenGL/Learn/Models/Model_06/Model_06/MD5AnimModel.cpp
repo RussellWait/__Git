@@ -85,9 +85,9 @@ static void BuildFrameSkeleton(const Joint_Info_t *jointInfos,      // ½ÓÊÕhiera
 
             // add positions
             Quat_rotatePoint(parentJoint->orient, animatedPos, rPos);
-            thisJoint->pos[0] = rPos[X] + parentJoint->pos[X];
-            thisJoint->pos[1] = rPos[Y] + parentJoint->pos[Y];
-            thisJoint->pos[2] = rPos[Z] + parentJoint->pos[Z];
+            thisJoint->pos[X] = rPos[X] + parentJoint->pos[X];
+            thisJoint->pos[Y] = rPos[Y] + parentJoint->pos[Y];
+            thisJoint->pos[Z] = rPos[Z] + parentJoint->pos[Z];
 
             // concatenate rotations
             Quat_multQuat(parentJoint->orient, animatedOrient, thisJoint->orient);
@@ -175,7 +175,7 @@ int ReadAnim(const char *fileName, MD5_Anim_t *anim)
                 // read whole line
                 fgets(buff, sizeof(buff), fp);
                 // read joint info
-                sscanf(buff, "%s %d %d %d",
+                sscanf(buff, " %s %d %d %d",
                        jointInfos[i].name,
                        &jointInfos[i].parent,
                        &jointInfos[i].flags,
@@ -256,7 +256,7 @@ void DrawAnim(MD5_Model_t *mdl, MD5_Anim_t *anim, int skelFrames_index)
             continue;
         }
 
-        PremareMesh(&mdl->meshes[i], anim->skelFrames[skelFrames_index]);
+		PrepareMesh(&mdl->meshes[i], anim->skelFrames[skelFrames_index]);
 
         glBindTexture(GL_TEXTURE_2D, mdl->meshes[i].textures_h);
 

@@ -1,3 +1,4 @@
+
 #include "3D_Function.h"
 
 #include <windows.h>
@@ -9,7 +10,7 @@
 
 
 extern MD5_Model_t  *md5File;
-extern MD5_Anim_t   *md5anim;
+extern MD5_Anim_t   *md5Anim;
 
 float rotate_angle = 0.0f;
 int index = 0;
@@ -23,7 +24,7 @@ static float lightPosition[]    = {0.0f, 5.0f, 5.0f, 0.0f};
 
 void InitOpenGL()
 {
-    glClearColor(0.0f, 0.0f, 1.0f, 0.5f);
+    glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
     glClearDepth(1.0f);
 
     glEnable(GL_TEXTURE_2D);
@@ -94,11 +95,11 @@ void Render()
     glRotatef(-10.0f, 0.0f, 0.0f, 1.0f);
     glRotatef(rotate_angle, 0.0f, 0.0f, 1.0f);
 
-    DrawAnim(md5File, md5anim, index);
+	DrawAnim(md5File, md5Anim, index);
 
     rotate_angle += 0.5f;
 
-    if ( index < md5anim->num_frames - 1 )
+	if ( index < md5Anim->num_frames - 1 )
     {
         index++;
     }

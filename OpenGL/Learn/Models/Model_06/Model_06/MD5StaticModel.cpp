@@ -163,6 +163,7 @@ int ReadModel(const char *fileName, MD5_Model_t *mdl)
                     mesh->triangles[tri_index].index[Y] = idata[Y];
                     mesh->triangles[tri_index].index[Z] = idata[Z];
                 }
+				// 读取权重的数量并分配存储空间
                 else if ( 1 == sscanf(buff, " numweights %d", &mesh->num_weights) )
                 {
                     if ( mesh->num_weights > 0 )
@@ -198,7 +199,7 @@ void DrawModel(const MD5_Model_t *mdl)
 
     for ( int i = 0; i < mdl->num_meshes; i++ )
     {
-        PremareMesh(&mdl->meshes[i], mdl->baseSkel);
+		PrepareMesh(&mdl->meshes[i], mdl->baseSkel);
 
         for ( int j = 0; j < mdl->meshes[i].num_tris; j++ )
         {
@@ -248,7 +249,7 @@ void FreeModel(MD5_Model_t *mdl)
 }
 
 // 匹配网格
-void PremareMesh(const MD5_Mesh_t *mesh, const MD5_Joint_t *joints)
+void PrepareMesh(const MD5_Mesh_t *mesh, const MD5_Joint_t *joints)
 {
     int i, j, k;
 
@@ -294,7 +295,7 @@ void PremareMesh(const MD5_Mesh_t *mesh, const MD5_Joint_t *joints)
 void AllocVertexArrays()
 {
     vertexArray = (Vec3_t *)malloc(sizeof(Vec3_t) * max_verts);
-    textureArray = (Vec2_t *)malloc(sizeof(GLuint) * max_verts);
+    textureArray = (Vec2_t *)malloc(sizeof(Vec2_t) * max_verts);
     vertexIndices = (GLuint *)malloc(sizeof(GLuint) * max_tris * 3);
 }
 

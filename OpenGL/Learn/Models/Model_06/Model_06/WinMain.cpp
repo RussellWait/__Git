@@ -19,7 +19,7 @@ HDC		main_hdc;
 HGLRC	main_hrc;
 
 MD5_Model_t *md5File    = NULL; // 指向读取MD5模型信息的存储空间
-MD5_Anim_t  *md5anim    = NULL;
+MD5_Anim_t  *md5Anim    = NULL;
 
 
 ATOM				MyRegisterClass(HINSTANCE hInstance);
@@ -131,20 +131,20 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				AllocVertexArrays();
 			}
 
-            md5anim = (MD5_Anim_t *)malloc(sizeof(MD5_Anim_t));
-            memset(md5anim, 0, sizeof(MD5_Anim_t));
+            md5Anim = (MD5_Anim_t *)malloc(sizeof(MD5_Anim_t));
+            memset(md5Anim, 0, sizeof(MD5_Anim_t));
 
-            if ( !ReadAnim("models/turret_attack.md5anim", md5anim) )
+            if ( !ReadAnim("models/turret_attack.md5anim", md5Anim) )
             {
-                if ( md5anim )
+                if ( md5Anim )
                 {
-                    FreeAnim(md5anim);
-                    free(md5anim);
-                    md5anim = NULL;
+                    FreeAnim(md5Anim);
+                    free(md5Anim);
+                    md5Anim = NULL;
                 }
             }
 
-            SetTimer(hWnd, 1, 50, NULL);
+            SetTimer(hWnd, 1, 35, NULL);
 
             return 0;
 		} break;
