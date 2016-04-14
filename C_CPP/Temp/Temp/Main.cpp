@@ -1,50 +1,18 @@
-#include <iostream>  
+#include "Complex.h"
 
-class CA
+int main()
 {
-public:
-	CA(int a, int b, int &c) 
-		: a(a), b(b), c(c) {}
+	auto c1 = Complex(2, 3);
+	auto c2 = Complex(7, 1);
 
-	void show() {std::cout << "a:" << a << "\tb:" << b << "\tc:" << c << std::endl;}
-
-private:
-	int a;
-	const int b;
-	int &c;
-};
-
-
-class CB
-{
-public:
-	CB(int a) {}
-};
-
-
-class CC
-{
-public:
-	CC(int b) : cb(b) {}
-
-private:
-	CB cb;
-};
-
-class CD : CB
-{
-public:
-	CD() : CB(0) {}
-};
-
-
-int main()  
-{  
-	int c = 3;
-	CA ca(1, 2, c);
-	ca.show();
+	cout << c1 + c2 << endl;
+	cout << c1 - c2 << endl;
+	cout << c1 * c2 << endl;
+	cout << c1 / c2 << endl;
+	cout << c1++ << endl;
+	cout << ++c2 << endl;
 
 	getchar();
 
 	return 0;
-} 
+}
