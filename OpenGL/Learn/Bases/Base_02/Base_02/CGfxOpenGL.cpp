@@ -50,7 +50,7 @@ void CGfxOpenGL::SetupProjection(int width, int height)
 
 void CGfxOpenGL::Prepare(float dt)
 {
-    m_angle += 1.0f;
+    m_angle += 0.1f;
 }
 
 void CGfxOpenGL::Render()
