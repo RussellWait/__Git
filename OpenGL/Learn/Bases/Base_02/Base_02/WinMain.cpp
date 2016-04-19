@@ -16,9 +16,9 @@ BOOL                SetupPixelFormat(HDC hdc);
 char *className     = "GLClass";
 long windowWidth    = 800;
 long windowHeight   = 600;
-long windowBits		= 32;           // 
-bool exiting        = false;        // 标记是否退出主循环
-bool fullScreen		= false;        // 全屏标记
+long windowBits		= 32;           // 描述像素字段的大小
+bool exiting        = false;		// 标记是否退出主循环
+bool fullScreen		= false;		// 是否采用全屏模式
 
 HDC         main_hdc;
 HGLRC       main_hrc;
@@ -56,7 +56,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
         if ( PeekMessage(&msg, NULL, 0, 0, PM_NOREMOVE) )
         {
             // 从系统获取消息，并将消息从系统移除
-			if ( !GetMessage(&msg, NULL, 0, 0) )
+			while ( !GetMessage(&msg, NULL, 0, 0) )
             {
                 exiting = true;
                 break;
@@ -71,12 +71,10 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     // 删除opengl绘图实例
 	delete g_glRender;
 
+	// 全屏模式下，释放窗口设备
 	if ( fullScreen )
     {
-        // 释放设备
 		ChangeDisplaySettings(NULL, 0);
-
-        // 显示光标
 		ShowCursor(TRUE);
 	}
 
@@ -135,6 +133,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nShowCmd)
 		}
 	}
 
+	// 指定全屏和非全屏时窗口风格
 	if ( fullScreen )
 	{
 		dwExStyle = WS_EX_APPWINDOW;
@@ -165,8 +164,8 @@ BOOL InitInstance(HINSTANCE hInstance, int nShowCmd)
         return FALSE;
     }
 
-    ShowWindow(hWnd, SW_SHOW);
-    UpdateWindow(hWnd);
+    ShowWindow(hWnd, SW_SHOW);	// 显示窗口
+    UpdateWindow(hWnd);			// 更新窗口
 
     return TRUE;
 }
@@ -175,19 +174,21 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     switch ( message )
     {
+		// 创建窗口时
         case WM_CREATE:
         {
-            main_hdc = GetDC(hWnd);
-            SetupPixelFormat(main_hdc);
-            main_hrc = wglCreateContext(main_hdc);
-            wglMakeCurrent(main_hdc, main_hrc);
+            main_hdc = GetDC(hWnd);						// 获取窗口上下文句柄
+            SetupPixelFormat(main_hdc);					// 设置此窗口的颜色格式
+            main_hrc = wglCreateContext(main_hdc);		// 创建一个新的OpenGL渲染描述表（拥有设备上下一样的像素格式）
+            wglMakeCurrent(main_hdc, main_hrc);			// 设定OpenGL当前的渲染环境
 
             return 0;
         } break;
 
+		// 窗口尺寸改变时
         case WM_SIZE:
         {
-            windowHeight = HIWORD(lParam);
+            windowHeight = HIWORD(lParam);				// 获取改变后的窗口宽高
             windowWidth = LOWORD(lParam);
 
             g_glRender->SetupProjection(windowWidth, windowHeight);
@@ -195,6 +196,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             return 0;
         } break;
 
+		// 键盘事件
         case WM_KEYDOWN:
         {
             int fwKeys;
@@ -204,6 +206,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
             switch ( fwKeys )
             {
+				// 按ESC退出
                 case VK_ESCAPE:
                 {
                     PostQuitMessage(0);
@@ -230,11 +233,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             return 0;
         } break;
 
+		// 窗口关闭时
         case WM_CLOSE:
         {
-            wglMakeCurrent(main_hdc, NULL);
-            wglDeleteContext(main_hrc);
-            PostQuitMessage(0);
+			wglMakeCurrent(main_hdc, NULL);		// 释放当前窗口渲染环境
+            wglDeleteContext(main_hrc);			// 设防当前窗口上下文环境
+            PostQuitMessage(0);					// 发送退出消息
 
             return 0;
         } break;
@@ -246,22 +250,29 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     return DefWindowProc(hWnd, message, wParam, lParam);
 }
 
+// 设置像素格式
 BOOL SetupPixelFormat(HDC hdc)
 {
     PIXELFORMATDESCRIPTOR pfd =
     {
-        sizeof(PIXELFORMATDESCRIPTOR),
-        1.0f,
-        PFD_DRAW_TO_WINDOW | PFD_SUPPORT_OPENGL | PFD_DOUBLEBUFFER,
-        PFD_TYPE_RGBA,
-        32, 0, 0, 0, 0, 0, 0, 0, 0,
+        sizeof(PIXELFORMATDESCRIPTOR),								// 此结构体大小
+        1.0f,														// 版本号
+        PFD_DRAW_TO_WINDOW | PFD_SUPPORT_OPENGL | PFD_DOUBLEBUFFER,	// 绘制方式
+        PFD_TYPE_RGBA,												// 颜色格式
+        32,															// 使用32位颜色
+		0, 0, 0, 0, 0, 0, 0, 0,										// 颜色的位数和位移数
         0, 0, 0, 0, 0,
-        32, 0, 0,
-        PFD_MAIN_PLANE,
+        32,															// 深度缓冲区字节数
+		0, 
+		0,
+        PFD_MAIN_PLANE,												// 绘制图形的属性，设置为主绘图层
         0,
         0, 0, 0
     };
 
+	// 检测与设置最匹配的像素格式
     int pixelformat = ChoosePixelFormat(hdc, &pfd);
+
+	// 设置像素格式
     return SetPixelFormat(hdc, pixelformat, &pfd);
 }
