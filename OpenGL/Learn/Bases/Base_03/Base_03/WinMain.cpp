@@ -1,62 +1,3 @@
-#define WIN32_LEAN_AND_MEAN
-
-#include <windows.h>
-#include <gl/GL.H>
-#include <gl/GLU.H>
-#include "CGfxOpenGL.h"
-
-
-ATOM                MyRegisterClass(HINSTANCE hInstance);
-BOOL                InitInstance(HINSTANCE hInstance, int nShowCmd);
-LRESULT CALLBACK    WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
-BOOL                SetupPixelFormat(HDC hdc);
-
-
-char    *className      = "GLClass";
-long    windowWidth     = 800;
-long    windowHeight    = 600;
-long    windowBits      = 32;
-bool    exiting         = false;
-bool    fullScreen      = false;
-
-HDC     main_hdc;
-HGLRC   main_hrc;
-
-
-int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nShowCmd)
-{
-    MSG msg;
-
-    if ( !MyRegisterClass(hInstance) )
-    {
-        return FALSE;
-    }
-
-    if ( !InitInstance(hInstance, nShowCmd) )
-    {
-        return FALSE;
-    }
-
-    while ( !exiting )
-    {
-
-
-        if ( PeekMessage(&msg, NULL, 0, 0, PM_NOREMOVE) )
-        {
-            while ( !GetMessage(&msg, NULL, 0, 0) )
-            {
-                exiting = true;
-                break;
-            }
-
-            TranslateMessage(&msg);
-            DispatchMessage(&msg);
-        }
-    }
-}
-#define WIN32_LEAN_AND_MEAN
-#define WIN32_EXTRA_LEAN
-
 #include <windows.h>
 #include <gl/GL.H>
 #include <gl/GLU.H>
@@ -80,10 +21,19 @@ HDC         main_hdc;
 HGLRC       main_hrc;
 CGfxOpenGL  *g_glRender = NULL;
 
+PrimType type;		// 生成图元类型
+char *suffixTitle[] = { "Points", "Lines", "TrianglesQuads", "Polygons", "OnYourOwn #1" };
+
 
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nShowCmd)
 {
-    g_glRender = new CGfxOpenGL();
+	type = Points;
+	type = Lines;
+	type = TrianglesQuads;
+	type = Polygons;
+	type = OnYourOwn1;
+
+    g_glRender = new CGfxOpenGL(type);
     g_glRender->Init();
 
     MSG     msg;
@@ -205,9 +155,12 @@ BOOL InitInstance(HINSTANCE hInstance, int nShowCmd)
     // 根据设备计算出需要的窗口大小
     AdjustWindowRectEx(&windowRect, dwStyle, FALSE, dwExStyle);
 
+	char title[64] = "BOGLGP - Chapter 3 - ";
+	strcat(title, suffixTitle[type]);
+
     HWND hWnd = CreateWindowEx(NULL,
                                className,
-                               "BOGLGP - Chapter 2 - OpenGL Application",
+							   title,
                                dwStyle | WS_CLIPCHILDREN | WS_CLIPSIBLINGS,
                                0, 0, windowWidth, windowHeight,
                                NULL,
@@ -318,7 +271,7 @@ BOOL SetupPixelFormat(HDC hdc)
         32,															// 使用32位颜色
         0, 0, 0, 0, 0, 0, 0, 0,										// 颜色的位数和位移数
         0, 0, 0, 0, 0,
-        32,															// 深度缓冲区字节数
+        16,															// 深度缓冲区字节数
         0,
         0,
         PFD_MAIN_PLANE,												// 绘制图形的属性，设置为主绘图层

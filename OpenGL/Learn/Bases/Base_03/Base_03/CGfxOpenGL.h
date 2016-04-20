@@ -10,7 +10,7 @@ typedef enum
 {
     Points,
     Lines,
-    Triangles,
+	TrianglesQuads,
     Polygons,
     OnYourOwn1,
 } PrimType;
@@ -31,6 +31,18 @@ public:
     void Render();
 
 private:
+	void DrawPoints();
+	void DrawTriangles();
+	void DrawTriangleStrip();
+	void DrawTriangleFan();
+	void DrawQuads();
+	void DrawQuadStrip();
+
+	void Draw2DSquare();
+
+	void DrawCircleApproximation(float radius, int numberOfSides, bool edgeOnly);
+
+
     int         m_windowWidth;
     int         m_windowHeight;
     float       m_angle;
