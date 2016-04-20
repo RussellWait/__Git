@@ -17,7 +17,7 @@ CGfxOpenGL::~CGfxOpenGL()
 
 bool CGfxOpenGL::Init()
 {
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);		// 设置背景色
 
 	return true;
 }
@@ -27,19 +27,26 @@ bool CGfxOpenGL::Shutdown()
 	return true;
 }
 
+// 设置窗口宽高
 void CGfxOpenGL::SetupProjection(int width, int height)
 {
+	// 窗口高度至少为1
 	if ( 0 == height )
 	{
 		height = 1;
 	}
 
+	// 窗口位置与大小
 	glViewport(0, 0, width, height);
+
+	// 投影矩阵
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 
+	// 设置视角大小，窗口宽高比，前后显示界限
 	gluPerspective(52.0f, (GLfloat)width / (GLdouble)height, 1.0f, 1000.0f);
 
+	// 设置为模型矩阵并初始化
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
@@ -67,6 +74,7 @@ void CGfxOpenGL::Render()
 
 		float pointSize = 0.5;
 		
+		// 从左至右依次画出半径逐渐变大的点
 		for ( float point = -4.0f; point < 5.0f; point += 0.5 )
 		{
 			glPointSize(pointSize);
@@ -85,9 +93,10 @@ void CGfxOpenGL::Render()
 				  0.0f, 0.0f, 0.0f,
 				  0.0f, 1.0f, 0.0f);
 
-		float lineWidth = 0.5f;
+		float lineWidth = 0.5f;		// 线宽
 		for ( float line = 0.0f; line < 7.0f; line += 0.5f )
 		{
+			// 画线
 			glLineWidth(lineWidth);
 			glBegin(GL_LINES);
 				glVertex3f(-5.0f, 0.0f, line - 3.0f);
@@ -96,7 +105,8 @@ void CGfxOpenGL::Render()
 			lineWidth += 1.0f;
 		}
 
-		short stipplePattern = 0xAAAA;
+		// 设为虚线模式
+		short stipplePattern = 0xAAAA;	// 虚线的样式
 		glEnable(GL_LINE_STIPPLE);
 		glLineStipple(2, stipplePattern);
 
@@ -113,6 +123,7 @@ void CGfxOpenGL::Render()
 
 		glDisable(GL_LINE_STIPPLE);
 	}
+	// 绘制三角形，四边形
 	else if ( TrianglesQuads == m_type )
 	{
 		gluLookAt(0.0f, 10.0f, 0.1f,
@@ -160,13 +171,14 @@ void CGfxOpenGL::Render()
 		DrawQuadStrip();
 		glPopMatrix();
 	}
+	// 绘制多边形
 	else if ( Polygons == m_type )
 	{
 		gluLookAt(0.0f, 10.0f, 0.1f,
 				  0.0f, 0.0f, 0.0f,
 				  0.0f, 1.0f, 0.0f);
 
-		glPolygonMode(GL_FRONT, GL_LINE);
+		glPolygonMode(GL_FRONT, GL_LINE);			// 正面采用画边模式
 		glPushMatrix();
 		glTranslatef(-4.0f, 0.0f, 0.0f);
 		glRotatef(m_angle, 0.0f, 0.0f, 1.0f);
@@ -174,7 +186,7 @@ void CGfxOpenGL::Render()
 		Draw2DSquare();
 		glPopMatrix();
 
-		glPolygonMode(GL_BACK, GL_POINT);
+		glPolygonMode(GL_BACK, GL_POINT);			// 背面采用画点模式
 		glPushMatrix();
 		glTranslatef(-2.0f, 0.0f, 0.0f);
 		glRotatef(m_angle, 0.0f, 0.0f, 1.0f);
@@ -182,7 +194,7 @@ void CGfxOpenGL::Render()
 		Draw2DSquare();
 		glPopMatrix();
 
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);	// 两面都采用填充模式
 		glPushMatrix();
 		glTranslatef(0.0f, 0.0f, 0.0f);
 		glRotatef(m_angle, 0.0f, 0.0f, 1.0f);
@@ -190,7 +202,7 @@ void CGfxOpenGL::Render()
 		Draw2DSquare();
 		glPopMatrix();
 
-		glPolygonMode(GL_BACK, GL_LINE);
+		glPolygonMode(GL_BACK, GL_LINE);			// 背面采用画边模式
 		glPushMatrix();
 		glTranslatef(2.0f, 0.0f, 0.0f);
 		glRotatef(m_angle, 0.0f, 0.0f, 1.0f);
@@ -198,7 +210,7 @@ void CGfxOpenGL::Render()
 		Draw2DSquare();
 		glPopMatrix();
 
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);	// 正反都采用画边模式
 		glPushMatrix();
 		glTranslatef(4.0f, 0.0f, 0.0f);
 		glRotatef(m_angle, 0.0f, 0.0f, 1.0f);
@@ -223,7 +235,7 @@ void CGfxOpenGL::Render()
 }
 
 
-
+// 画4X4的点阵
 void CGfxOpenGL::DrawPoints()
 {
 	glPointSize(4.0f);
@@ -238,9 +250,10 @@ void CGfxOpenGL::DrawPoints()
 	glEnd();
 }
 
+// 画三角形
 void CGfxOpenGL::DrawTriangles()
 {
-	glBegin(GL_TRIANGLES);
+	glBegin(GL_TRIANGLES);		// 填充形式的三角形
 		for ( int x = 0; x < 3; x++ )
 		{
 			for ( int z = 0; z < 3; z++ )
@@ -257,7 +270,7 @@ void CGfxOpenGL::DrawTriangleStrip()
 {
 	for ( int x = 0; x < 3; x++ )
 	{
-		glBegin(GL_TRIANGLE_STRIP);
+		glBegin(GL_TRIANGLE_STRIP);	// 只画三角形的边（每相邻三个点形成一个三角形）
 			for ( int z = 0; z < 3; z++ )
 			{
 				glVertex3f(x, 0.0f, z);
@@ -269,13 +282,16 @@ void CGfxOpenGL::DrawTriangleStrip()
 	}
 }
 
+// 话扇形
 void CGfxOpenGL::DrawTriangleFan()
 {
+	// 以第一个点为圆心，（每相邻两个点与第一个点画一个三角形）
 	glBegin(GL_TRIANGLE_FAN);
 		glVertex3f(0.0f, 0.0f, 0.0f);
 		for ( int x = 4; x > 0; x-- )
 		{
 			glVertex3f(x - 1.0f, 0.0f, 3.0f);
+			glVertex3f(3.0f, 0.0f, x - 1.0f);
 		}
 		for ( int z = 4; z > 0; z-- )
 		{
@@ -284,6 +300,7 @@ void CGfxOpenGL::DrawTriangleFan()
 	glEnd();
 }
 
+// 画四边形
 void CGfxOpenGL::DrawQuads()
 {
 	glBegin(GL_QUADS);
@@ -291,6 +308,7 @@ void CGfxOpenGL::DrawQuads()
 		{
 			for ( int z = 0; z < 3; z++ )
 			{
+				// 指明四个顶点
 				glVertex3f(x, 0.0f, z);
 				glVertex3f(x + 1.0f, 0.0f, z);
 				glVertex3f(x + 1.0f, 0.0f, z + 1.0f);
@@ -300,6 +318,7 @@ void CGfxOpenGL::DrawQuads()
 	glEnd();
 }
 
+// 画四边形
 void CGfxOpenGL::DrawQuadStrip()
 {
 	for ( int x = 0; x < 3; x++ )
@@ -307,6 +326,7 @@ void CGfxOpenGL::DrawQuadStrip()
 		glBegin(GL_QUAD_STRIP);
 			for ( int z = 0; z < 4; z++ )
 			{
+				// 指明左上、右下两个点
 				glVertex3f(x, 0.0f, z);
 				glVertex3f(x + 1.0f, 0.0f, z);
 			}
@@ -314,6 +334,7 @@ void CGfxOpenGL::DrawQuadStrip()
 	}
 }
 
+// 画多边形
 void CGfxOpenGL::Draw2DSquare()
 {
 	glBegin(GL_POLYGON);
@@ -324,14 +345,17 @@ void CGfxOpenGL::Draw2DSquare()
 	glEnd();
 }
 
+// 花多边形
 void CGfxOpenGL::DrawCircleApproximation(float radius, int numberOfSides, bool edgeOnly)
 {
 	if ( edgeOnly )
 	{
+		// 只画边采用画线段的形势
 		glBegin(GL_LINE_STRIP);
 	}
 	else
 	{
+		// 填充模式
 		glBegin(GL_POLYGON);
 	}
 
@@ -345,6 +369,7 @@ void CGfxOpenGL::DrawCircleApproximation(float radius, int numberOfSides, bool e
 
 		if ( edgeOnly )
 		{
+			// 只画边需要完成闭合
 			glVertex3f(radius, 0.0f, 0.0f);
 		}
 

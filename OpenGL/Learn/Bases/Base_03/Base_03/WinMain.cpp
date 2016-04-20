@@ -30,11 +30,11 @@ char *suffixTitle[] = { "Points", "Lines", "TrianglesQuads", "Polygons", "OnYour
 
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nShowCmd)
 {
-	type = Points;
-	type = Lines;
-	type = TrianglesQuads;
-	type = Polygons;
-	type = OnYourOwn1;
+//	type = Points;
+// 	type = Lines;
+ 	type = TrianglesQuads;
+// 	type = Polygons;
+// 	type = OnYourOwn1;
 
     g_glRender = new CGfxOpenGL(type);
     g_glRender->Init();
