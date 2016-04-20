@@ -11,9 +11,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{947F73DA-B885-4FC3-A702-13A7204087CF}</ProjectGuid>
+    <ProjectGuid>{4C051646-6194-4FE4-8358-8F7B813C2E15}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>Base_04</RootNamespace>
+    <RootNamespace>WhatUp_01</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -56,7 +56,6 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>OPENGL32.LIB;GLU32.LIB;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -77,13 +76,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="CGfxOpenGL.h" />
-    <ClInclude Include="Translation.h" />
+    <ClInclude Include="bsipic.h" />
+    <ClInclude Include="OpenGL.h" />
+    <ClInclude Include="StdAfx.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CGfxOpenGL.cpp" />
-    <ClCompile Include="Translation.cpp" />
+    <ClCompile Include="bsipic.cpp" />
+    <ClCompile Include="OpenGL.cpp" />
     <ClCompile Include="WinMain.cpp" />
+    <ClCompile Include="StdAfx.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

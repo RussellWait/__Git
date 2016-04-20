@@ -68,9 +68,9 @@ void CGfxOpenGL::Render()
 	if ( Points == m_type )
 	{
 
-		gluLookAt(0.0f, 6.0f, 0.1f,
+		gluLookAt(0.0f, 6.0f, 0.0f,
 				  0.0f, 0.0f, 0.0f,
-				  0.0f, 1.0f, 0.0f);
+				  0.0f, 0.0f, -1.0f);
 
 		float pointSize = 0.5;
 		
@@ -89,9 +89,9 @@ void CGfxOpenGL::Render()
 	// 绘制线
 	else if ( Lines == m_type )
 	{
-		gluLookAt(0.0f, 10.0f, 0.1f,
+		gluLookAt(0.0f, 10.0f, 0.0f,
 				  0.0f, 0.0f, 0.0f,
-				  0.0f, 1.0f, 0.0f);
+				  0.0f, 0.0f, -1.0f);
 
 		float lineWidth = 0.5f;		// 线宽
 		for ( float line = 0.0f; line < 7.0f; line += 0.5f )
@@ -126,7 +126,7 @@ void CGfxOpenGL::Render()
 	// 绘制三角形，四边形
 	else if ( TrianglesQuads == m_type )
 	{
-		gluLookAt(0.0f, 10.0f, 0.1f,
+		gluLookAt(0.0f, 10.0f, 0.0f,
 				  0.0f, 0.0f, 0.0f,
 				  0.0f, 0.0f, -1.0f);
 
@@ -174,9 +174,9 @@ void CGfxOpenGL::Render()
 	// 绘制多边形
 	else if ( Polygons == m_type )
 	{
-		gluLookAt(0.0f, 10.0f, 0.1f,
+		gluLookAt(0.0f, 10.0f, 0.0f,
 				  0.0f, 0.0f, 0.0f,
-				  0.0f, 1.0f, 0.0f);
+				  0.0f, 0.0f, -1.0f);
 
 		glPolygonMode(GL_FRONT, GL_LINE);			// 正面采用画边模式
 		glPushMatrix();
@@ -224,9 +224,9 @@ void CGfxOpenGL::Render()
 	}
 	else if ( OnYourOwn1 == m_type )
 	{
-		gluLookAt(0.0f, 10.0f, 0.1f,
+		gluLookAt(0.0f, 10.0f, 0.0f,
 				  0.0f, 0.0f, 0.0f,
-				  0.0f, 1.0f, 0.0f);
+				  0.0f, 0.0f, -1.0f);
 
 		glColor3f(1.0f, 1.0f, 1.0f);
 
@@ -291,7 +291,6 @@ void CGfxOpenGL::DrawTriangleFan()
 		for ( int x = 4; x > 0; x-- )
 		{
 			glVertex3f(x - 1.0f, 0.0f, 3.0f);
-			glVertex3f(3.0f, 0.0f, x - 1.0f);
 		}
 		for ( int z = 4; z > 0; z-- )
 		{

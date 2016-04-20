@@ -5,6 +5,7 @@
 #include <gl/GL.H>
 #include <gl/GLU.H>
 #include "CGfxOpenGL.h"
+#include "Translation.h"
 
 
 ATOM                MyRegisterClass(HINSTANCE hInstance);
@@ -24,19 +25,34 @@ HDC         main_hdc;
 HGLRC       main_hrc;
 CGfxOpenGL  *g_glRender = NULL;
 
-PrimType type;		// 生成图元类型
-char *suffixTitle[] = { "Points", "Lines", "TrianglesQuads", "Polygons", "OnYourOwn #1" };
+
+typedef enum
+{
+    tTranslation,
+} ObjectionTypes;
+
+char *suffixTitle[] = 
+{ 
+    "Translation", 
+    "Lines", 
+    "TrianglesQuads", 
+    "Polygons", 
+    "OnYourOwn #1" 
+};
+
+ObjectionTypes type;
 
 
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nShowCmd)
 {
-	type = Points;
-// 	type = Lines;
-// 	type = TrianglesQuads;
-// 	type = Polygons;
-// 	type = OnYourOwn1;
+    type = tTranslation;
 
-    g_glRender = new CGfxOpenGL(type);
+    CGfxOpenGL *objects[] =
+    {
+        new Translation()
+    };
+
+    g_glRender = objects[type];
     g_glRender->Init();
 
     MSG     msg;
@@ -158,7 +174,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nShowCmd)
     // 根据设备计算出需要的窗口大小
     AdjustWindowRectEx(&windowRect, dwStyle, FALSE, dwExStyle);
 
-	char title[64] = "BOGLGP - Chapter 3 - ";
+	char title[64] = "BOGLGP - Chapter 4 - ";
 	strcat(title, suffixTitle[type]);
 
     HWND hWnd = CreateWindowEx(NULL,
