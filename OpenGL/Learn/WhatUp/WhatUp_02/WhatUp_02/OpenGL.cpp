@@ -4,11 +4,13 @@
 #include "OpenGL.h"
 //////////////////////////////////////////////////////////////////////
 OpenGL::OpenGL()
-{
-}
+{}
+
 OpenGL::~OpenGL()
-{	CleanUp();
+{	
+	CleanUp();
 }
+
 BOOL OpenGL::SetupPixelFormat(HDC hDC0)//检测安装OpenGL
 {	int nPixelFormat;					  // 象素点格式
 	hDC=hDC0;
@@ -43,6 +45,7 @@ BOOL OpenGL::SetupPixelFormat(HDC hDC0)//检测安装OpenGL
 	m_bsipic->light0(0,10,-20,128);
 	return TRUE;
 }
+
 void OpenGL::init(int Width, int Height)
 {	glViewport(0,0,Width,Height);			// 设置OpenGL视口大小。	
 	glMatrixMode(GL_PROJECTION);			// 设置当前矩阵为投影矩阵。
@@ -58,6 +61,7 @@ void OpenGL::init(int Width, int Height)
 	glLoadIdentity();						// 重置当前指定的矩阵为单位矩阵
 //====================================================
 }
+
 void OpenGL::Render()//OpenGL图形处理
 { glClearColor(0.0f, 0.0f, 0.3f, 1.0f);			 // 设置刷新背景色
   glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);// 刷新背景
@@ -69,6 +73,7 @@ void OpenGL::Render()//OpenGL图形处理
   glFlush();									// 更新窗口
   SwapBuffers(hDC);								// 切换缓冲区
 }
+
 void OpenGL::CleanUp()
 { wglMakeCurrent(hDC, NULL);					//清除OpenGL
   wglDeleteContext(hRC);						//清除OpenGL

@@ -80,38 +80,55 @@ void OpenGL::play()
 {	glPushMatrix(); 
 	glPointSize(4);	
 	glTranslatef (-5, 4,-13);glRotatef(r,1.0,1.0,1.0);
-	glColor3f(1.0f, 0.0f, 0.0f);m_bsipic.Point();	
+	glColor3f(1.0f, 0.0f, 0.0f);
+	m_bsipic.Point();	
 	glPopMatrix();
+
 	glPushMatrix(); 
 	glTranslatef ( 0, 4,-13);glRotatef(r,1.0,1.0,1.0);
-	glColor3f(0.0f, 1.0f, 0.0f);m_bsipic.Line();	
+	glColor3f(0.0f, 1.0f, 0.0f);
+	m_bsipic.Line();	
 	glPopMatrix();
+
 	glPushMatrix();
 	glTranslatef ( 5, 4,-13);glRotatef(r,1.0,1.0,1.0); 
-	glColor3f(0.0f, 0.0f, 1.0f);m_bsipic.Triangle();
+	glColor3f(0.0f, 0.0f, 1.0f);
+	m_bsipic.Triangle();
 	glPopMatrix();
+
 	glPushMatrix();
 	glTranslatef (-5, 0,-13);glRotatef(r,1.0,1.0,1.0); 
-	glColor3f(1.0f, 1.0f, 0.0f);m_bsipic.Square();
+	glColor3f(1.0f, 1.0f, 0.0f);
+	m_bsipic.Square();
 	glPopMatrix();
+
 	glPushMatrix();
 	glTranslatef ( 0, 0,-13);glRotatef(r,1.0,1.0,1.0);
-	glColor3f(0.0f, 1.0f, 1.0f);m_bsipic.Esquare();	
+	glColor3f(0.0f, 1.0f, 1.0f);
+	m_bsipic.Esquare();	
 	glPopMatrix();
+
 	glPushMatrix(); 
 	glTranslatef ( 5, 0,-13);glRotatef(r,1.0,1.0,1.0); 
-	glColor3f(1.0f, 0.0f, 1.0f);m_bsipic.Park();
+	glColor3f(1.0f, 0.0f, 1.0f);
+	m_bsipic.Park();
 	glPopMatrix();
+
 	glPushMatrix(); 
 	glTranslatef (-5,-4,-13);glRotatef(r,1.0,1.0,1.0); 
-	glColor3f(1.0f, 1.0f, 1.0f);m_bsipic.Pillar();	
+	glColor3f(1.0f, 1.0f, 1.0f);
+	m_bsipic.Pillar();	
 	glPopMatrix();
+
 	glPushMatrix(); 
 	glTranslatef ( 0, -4,-13);glRotatef(r,1.0,1.0,1.0);
-	glColor3f(0.7f, 0.7f, 0.7f);auxSolidCone(1,1);
+	glColor3f(0.7f, 0.7f, 0.7f);
+	auxSolidCone(1,1);
 	glPopMatrix();
+
 	glPushMatrix(); 
 	glTranslatef ( 5,-4,-13);glRotatef(r,1.0,1.0,1.0); 
-	glColor3f(0.4f, 0.4f, 0.4f);auxWireTeapot(1);
+	glColor3f(0.4f, 0.4f, 0.4f);
+	auxWireTeapot(1);
 	glPopMatrix();
 }

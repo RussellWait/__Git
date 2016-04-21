@@ -7,12 +7,17 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
+
 class bsipic  
-{	public:	bsipic();
+{	
+public:	
+	bsipic();
 	virtual ~bsipic();
-	public:
+
+public:
 	UINT g_cactus[16];	
 	GLUquadricObj *g_text; 
+
 	void Box(float x,float y,float z);
 	void picter(float x,float y,float z);
 	void airplane(float x,float y,float z);

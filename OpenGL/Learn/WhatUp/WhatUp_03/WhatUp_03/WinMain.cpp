@@ -1,6 +1,8 @@
 
 #include "stdafx.h"
 #include "OpenGL.h"
+
+
 //////////////////////////////////////////////////////////
 OpenGL* m_OpenGL;
 HDC		hDC;		// GDI设备句柄,将窗口连接到 GDI( 图形设备接口)
@@ -9,6 +11,8 @@ HWND	hWnd=NULL;	// 保存 Windows 分配给程序的窗口句柄
 int		Width = 800;// 窗口宽
 int		Height= 600;// 窗口高
 int		bits  = 16;	// 颜色深度
+
+
 void GameLoop()
 {   MSG msg; 
     BOOL fMessage;
@@ -22,6 +26,7 @@ void GameLoop()
         else  m_OpenGL->Render();	//无消息
     }
 }
+
 LRESULT WINAPI MsgProc(HWND hWnd,UINT message,WPARAM wParam,LPARAM lParam )// 消息处理
 {	switch(message)
 	{	case WM_CREATE:						// 建立窗口
@@ -52,6 +57,7 @@ LRESULT WINAPI MsgProc(HWND hWnd,UINT message,WPARAM wParam,LPARAM lParam )// 消
 	}
 	return (DefWindowProc(hWnd, message, wParam, lParam));
 }
+
 INT WINAPI WinMain(HINSTANCE hInst,HINSTANCE,LPSTR,INT )// WinMain程序入口
 {   // 注册窗口类
 	bool fullScreen =TRUE;

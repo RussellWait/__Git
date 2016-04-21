@@ -7,13 +7,23 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
+#include <time.h>
+
+
+#define FRAND	((rand()%256) / 255.0f)
+#define MAP		10
+#define KEY_DOWN(vk_code) ((GetAsyncKeyState(vk_code) & 0x8000) ? 1 : 0)
+
+
 class baiscobj  
 {
 public:
 	baiscobj();
 	virtual ~baiscobj();
+
 public:
 		int			m_Time,m_Fram;
+
 private:GLdouble	g_eye[3];		//
 		GLdouble	g_look[3];		//
 		float		rad_xz;	
@@ -21,6 +31,7 @@ private:GLdouble	g_eye[3];		//
 		float		g_elev;	
 		UINT g_cactus[16];
 		GLUquadricObj *g_text; 
+
 public:	GLvoid		DrawGround();
 		BOOL		DisplayScene();	
 		void		light0();

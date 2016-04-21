@@ -22,6 +22,7 @@ void bsipic::Point()//画点
    glVertex3f( 1.0f,-1.0f, 0.0f);//c点
   glEnd();
 }
+
 void bsipic::Line()//画线
 { glBegin(GL_LINE_LOOP); //
    glVertex3f( 0.0f, 1.0f,-1.0f);//a点
@@ -29,6 +30,7 @@ void bsipic::Line()//画线
    glVertex3f( 1.0f,-1.0f, 0.0f);//c点
   glEnd();
 }
+
 void bsipic::Triangle()//画面
 { glBegin(GL_POLYGON);//
 	glVertex3f( 0.0f, 1.0f,-1.0f);//a点
@@ -36,6 +38,7 @@ void bsipic::Triangle()//画面
 	glVertex3f( 1.0f,-1.0f, 0.0f);//c点
   glEnd();
 }
+
 void bsipic::Square()//画正方面
 { glBegin(GL_POLYGON);//
 	glVertex3f(0.0f,0.0f ,0.0f);//a点
@@ -44,6 +47,7 @@ void bsipic::Square()//画正方面
 	glVertex3f(0.0f,0.0f,-1.0f);//d点
   glEnd();
 }
+
 void bsipic::Esquare()//画正方体
 { glBegin(GL_QUAD_STRIP);//
     glVertex3f(0.0f,0.0f ,0.0f);//a0点
@@ -69,6 +73,7 @@ void bsipic::Esquare()//画正方体
 	glVertex3f(0.0f,1.0f,-1.0f);//d1点
   glEnd();
 }
+
 void bsipic::Park ()//画园
 { glBegin(GL_TRIANGLE_FAN);//
    glVertex3f(0,0,0.0f );   
@@ -78,6 +83,7 @@ void bsipic::Park ()//画园
    }
   glEnd();
 }
+
 void bsipic::Pillar () //园柱
 {glBegin(GL_QUAD_STRIP);//
    for(int i=0;i<=390;i+=30)
