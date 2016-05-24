@@ -15,39 +15,27 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CGfxOpenGL.h">
+    <ClInclude Include="bsipic.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Translation.h">
+    <ClInclude Include="OpenGL.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Scaling.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Rotation.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Projections.h">
+    <ClInclude Include="StdAfx.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="bsipic.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenGL.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="StdAfx.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
     <ClCompile Include="WinMain.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="CGfxOpenGL.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Translation.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Scaling.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Rotation.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Projections.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

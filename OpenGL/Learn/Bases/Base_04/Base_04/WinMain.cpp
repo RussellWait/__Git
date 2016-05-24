@@ -6,6 +6,9 @@
 #include <gl/GLU.H>
 #include "CGfxOpenGL.h"
 #include "Translation.h"
+#include "Scaling.h"
+#include "Rotation.h"
+#include "Projections.h"
 
 
 ATOM                MyRegisterClass(HINSTANCE hInstance);
@@ -29,14 +32,17 @@ CGfxOpenGL  *g_glRender = NULL;
 typedef enum
 {
     tTranslation,
+    tScaling,
+    tRotation,
+    tProjections,
 } ObjectionTypes;
 
 char *suffixTitle[] = 
 { 
     "Translation", 
-    "Lines", 
-    "TrianglesQuads", 
-    "Polygons", 
+    "Scaling", 
+    "Rotation", 
+    "Projections", 
     "OnYourOwn #1" 
 };
 
@@ -46,10 +52,16 @@ ObjectionTypes type;
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nShowCmd)
 {
     type = tTranslation;
+    type = tScaling;
+    type = tRotation;
+    type = tProjections;
 
     CGfxOpenGL *objects[] =
     {
-        new Translation()
+        new Translation(),
+        new Scaling(),
+        new Rotation(),
+        new Projections(),
     };
 
     g_glRender = objects[type];

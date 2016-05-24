@@ -3,17 +3,16 @@
 #include "CGfxOpenGL.h"
 
 
-class Translation : public CGfxOpenGL
+class Scaling : public CGfxOpenGL
 {
 public:
     virtual bool Init() override;
     virtual void Prepare(float dt) override;
     virtual void Render() override;
 
-
 private:
     void DrawPlane();
 
-    float   m_zPos;
-    bool    m_direction;
+    float   m_scaleFactor;
+    bool    m_increaseScale;
 };
